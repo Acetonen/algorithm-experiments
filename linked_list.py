@@ -4,8 +4,8 @@ class Node:
         self.value = v
         self.next = None
 
-    def __repr__(self):
-        return 'Node value: {}'.format(self.value)
+    # def __repr__(self):
+    #     return 'Node value: {}'.format(self.value)
 
 
 class LinkedList:
@@ -24,14 +24,14 @@ class LinkedList:
     def print_all_nodes(self):
         node = self.head
         while node:
-            print(node.value, end=' ')
+            print(node.value)
             node = node.next
 
-        print(
-            "\nhead: {} tail: {}".format(
-                getattr(self.head, 'value', None), getattr(self.tail, 'value', None)
-            )
-        )
+        # print(
+        #     "\nhead: {} tail: {}".format(
+        #         getattr(self.head, 'value', None), getattr(self.tail, 'value', None)
+        #     )
+        # )
 
     def find(self, val):
         node = self.head
