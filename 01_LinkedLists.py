@@ -5,7 +5,7 @@ class Node:
         self.next = None
 
     def __repr__(self):
-        return f'Node value: {self.value}'
+        return 'Node value: {}'.format(self.value)
 
 
 class LinkedList:
@@ -28,7 +28,9 @@ class LinkedList:
             node = node.next
 
         print(
-            f"\nhead: {getattr(self.head, 'value', None)} tail: {getattr(self.tail, 'value', None)}"
+            "\nhead: {} tail: {}".format(
+                getattr(self.head, 'value', None), getattr(self.tail, 'value', None)
+            )
         )
 
     def find(self, val):
