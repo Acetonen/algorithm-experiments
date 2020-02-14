@@ -52,12 +52,12 @@ class LinkedList:
 
         return result_list
 
-    def working_with_head_deletion(self):
+    def working_with_head_deletion(self, all_):
         if self.current_node.next:
             self.head = self.current_node.next
             self.current_node = self.current_node.next  # noqa
 
-            if not all:
+            if not all_:
                 self.exit_cycle = True
 
         else:
@@ -65,7 +65,7 @@ class LinkedList:
             self.tail = None
             self.exit_cycle = True  # noqa
 
-    def delete(self, val, all=False):  # noqa
+    def delete(self, val, all_=False):  # noqa
         self.prev_node = None
         self.current_node = self.head
         self.exit_cycle = False
@@ -73,12 +73,12 @@ class LinkedList:
         while self.current_node and not self.exit_cycle:
             if self.current_node.value == val:
                 if not self.prev_node:
-                    self.working_with_head_deletion()
+                    self.working_with_head_deletion(all_)
 
                 else:
                     self.prev_node.next = self.current_node.next
                     self.current_node = self.current_node.next
-                    if not all:
+                    if not all_:
                         self.exit_cycle = True  # noqa
             else:
                 self.prev_node = self.current_node  # noqa

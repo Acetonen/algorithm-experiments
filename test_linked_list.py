@@ -79,15 +79,22 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(linked_list.len(), 1)
 
     def test_delete_with_zero(self):
-        linked_list = self.get_linked_list([0, 2, 2])
-        self.assertEqual(self.get_node_values_list(linked_list), [0, 2, 2])
+        linked_list = self.get_linked_list([0, 0, 2, 2])
+        self.assertEqual(self.get_node_values_list(linked_list), [0, 0, 2, 2])
 
         linked_list.delete(2, True)
 
         self.assertEqual(linked_list.head.value, 0)
         self.assertEqual(linked_list.tail.value, 0)
-        self.assertEqual(linked_list.head.next, None)
+        self.assertNotEquals(linked_list.head.next, None)
         self.assertEqual(linked_list.tail.next, None)
+        self.assertEqual(linked_list.len(), 2)
+        self.assertEqual(self.get_node_values_list(linked_list), [0, 0])
+
+        linked_list.delete(0)
+
+        self.assertEqual(linked_list.head.value, 0)
+        self.assertEqual(linked_list.tail.value, 0)
         self.assertEqual(linked_list.len(), 1)
         self.assertEqual(self.get_node_values_list(linked_list), [0])
 
