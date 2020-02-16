@@ -1,3 +1,4 @@
+# flake8: noqa
 import pytest
 
 from dynamic_arrays.dynamic_array import DynArray

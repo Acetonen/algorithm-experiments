@@ -1,23 +1,26 @@
 import ctypes
 
+REDUCE_COEFFICIENT = 1.5
+MINIMAL_CAPACITY = 16
+
 
 class DynArray:
     def __init__(self):
         self.count = 0
-        self.capacity = 16
+        self.capacity = MINIMAL_CAPACITY
         self.array = self.make_array(self.capacity)
 
     def __len__(self):
         return self.count
-
-    def make_array(self, new_capacity):
-        return (new_capacity * ctypes.py_object)()
 
     def __getitem__(self, index):
         if index < 0 or index >= self.count:
             raise IndexError('Index is out of bounds')
 
         return self.array[index]
+
+    def make_array(self, new_capacity):
+        return (new_capacity * ctypes.py_object)()
 
     def resize(self, new_capacity):
         new_array = self.make_array(new_capacity)
@@ -49,7 +52,8 @@ class DynArray:
 
     def _check_for_reduce_size(self):
         if self.count < self.capacity / 2:
-            new_capacity = self.capacity // 1.5 if self.capacity // 1.5 > 16 else 16
+            reduced_size = self.capacity // REDUCE_COEFFICIENT
+            new_capacity = reduced_size if reduced_size > MINIMAL_CAPACITY else MINIMAL_CAPACITY
             self.resize(int(new_capacity))
 
     def insert(self, index, element):
@@ -59,21 +63,21 @@ class DynArray:
 
         self._check_for_increase_size()
 
-        tail = [self[i] for i in range(index, self.count)]
+        tail = [self[ind] for ind in range(index, self.count)]
         self.array[index] = element
         self.count = index + 1
 
-        for item in tail:
-            self.append(item)
+        for array_item in tail:
+            self.append(array_item)
 
     def delete(self, index):
         # Check out of range index
         self[index]  # noqa
 
-        tail = [self[i] for i in range(index + 1, self.count)]
+        tail = [self[ind] for ind in range(index + 1, self.count)]
         self.count = index
 
-        for item in tail:
-            self.append(item)
+        for array_item in tail:
+            self.append(array_item)
 
         self._check_for_reduce_size()
