@@ -25,7 +25,7 @@ class Stack:
         return self.stack.append(value)
 
     def peek(self):
-        return self.stack[-1]
+        return self.stack[-1] if self.stack else None
 
 
 class ReverseStack:

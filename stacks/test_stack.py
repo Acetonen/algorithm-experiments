@@ -11,6 +11,21 @@ TestFixture = namedtuple('TestFixture', 'init_list result')
     TestFixture([2], [666, 2]),
     TestFixture([], [666]),
 ])
+def test_peal_empty(fixture):
+    stack = ReverseStack()
+    stack.stack = fixture.init_list
+
+    stack.push(666)
+
+    assert stack.stack == fixture.result
+
+
+# noinspection PyUnresolvedReferences
+@pytest.mark.parametrize('fixture', [
+    TestFixture([2, 1, 3], [666, 2, 1, 3]),
+    TestFixture([2], [666, 2]),
+    TestFixture([], [666]),
+])
 def test_push_reverse(fixture):
     stack = ReverseStack()
     stack.stack = fixture.init_list
