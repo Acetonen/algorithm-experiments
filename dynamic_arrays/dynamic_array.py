@@ -52,7 +52,7 @@ class DynArray:
             new_capacity = self.capacity // 1.5 if self.capacity // 1.5 > 16 else 16
             self.resize(int(new_capacity))
 
-    def insert(self, element, index):
+    def insert(self, index, element):
         self._check_index_range(index)
         if self._check_for_append(element, index):
             return
@@ -67,7 +67,8 @@ class DynArray:
             self.append(item)
 
     def delete(self, index):
-        self[index]  # Check out of range index
+        # Check out of range index
+        self[index]  # noqa
 
         tail = [self[i] for i in range(index + 1, self.count)]
         self.count = index

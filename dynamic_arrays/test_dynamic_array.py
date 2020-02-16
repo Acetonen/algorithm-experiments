@@ -39,7 +39,7 @@ def test_insert_with_resize(dynamic_array, fixture):
     assert len(dynamic_array) == 16
     assert dynamic_array.capacity == 16
 
-    dynamic_array.insert(666, fixture.index)
+    dynamic_array.insert(fixture.index, 666)
 
     assert get_dyn_array_values_list(dynamic_array) == fixture.result
     assert len(dynamic_array) == 17
@@ -58,7 +58,7 @@ def test_insert_without_resize(dynamic_array, fixture):
     assert len(dynamic_array) == 15
     assert dynamic_array.capacity == 16
 
-    dynamic_array.insert(666, fixture.index)
+    dynamic_array.insert(fixture.index, 666)
 
     assert get_dyn_array_values_list(dynamic_array) == fixture.result
     assert len(dynamic_array) == 16
@@ -71,7 +71,7 @@ def test_insert_in_empty_array(dynamic_array):
     assert len(dynamic_array) == 0
     assert dynamic_array.capacity == 16
 
-    dynamic_array.insert(666, 0)
+    dynamic_array.insert(0, 666)
 
     assert get_dyn_array_values_list(dynamic_array) == [666]
     assert len(dynamic_array) == 1
