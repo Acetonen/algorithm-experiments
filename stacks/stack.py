@@ -7,6 +7,9 @@ OPERATOR = {
     '*': operator.mul,
 }
 
+SUCCESS_MESSAGE = 'Balanced string'
+UNSUCCESS_MESSAGE = 'Not balanced string'
+
 
 class Stack:
     def __init__(self):
@@ -60,12 +63,12 @@ def validate_parentheses(string):
         elif char == ')' and stack.size() > 0:
             stack.pop()
         else:
-            return 'Not balanced string'
+            return UNSUCCESS_MESSAGE
 
     if stack.size() > 0:
-        return 'Not balanced string'
+        return UNSUCCESS_MESSAGE
 
-    return 'Balanced string'
+    return SUCCESS_MESSAGE
 
 
 def postfix_count(string):
@@ -77,9 +80,9 @@ def postfix_count(string):
 
     while stack_one.size():
         element = stack_one.pop()
-        if element in {'-', '+', '/', '*'}:
+        if element in OPERATOR:
             stack_two.push(
-                OPERATOR[element](
+                OPERATOR.get(element)(
                     stack_two.pop(),
                     stack_two.pop(),
                 ),
