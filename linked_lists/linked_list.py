@@ -1,15 +1,10 @@
 class Node:
-
-    def __init__(self, v):
-        self.value = v
+    def __init__(self, value):
+        self.value = value
         self.next = None
-
-    # def __repr__(self):
-    #     return 'Node value: {}'.format(self.value)
 
 
 class LinkedList:
-
     def __init__(self):
         self.head = None
         self.tail = None
@@ -26,12 +21,6 @@ class LinkedList:
         while node:
             print(node.value)
             node = node.next
-
-        # print(
-        #     "\nhead: {} tail: {}".format(
-        #         getattr(self.head, 'value', None), getattr(self.tail, 'value', None)
-        #     )
-        # )
 
     def find(self, val):
         node = self.head
@@ -72,7 +61,7 @@ class LinkedList:
 
         while self.current_node and not self.exit_cycle:
             if self.current_node.value == val:
-                if not self.prev_node:
+                if self.prev_node is None:
                     self.working_with_head_deletion(all_)
 
                 else:
@@ -101,21 +90,27 @@ class LinkedList:
 
         return length
 
+    def _insert_in_tail(self, new_node):
+        new_node.next = self.head
+        self.head = new_node
+
+        if not self.tail:
+            self.tail = new_node
+
+    def _insert_in_body(self, new_node, after_node):
+        node = self.head
+        while node:
+            if node == after_node:
+                new_node.next = after_node.next
+                after_node.next = new_node
+
+                if self.tail is after_node:
+                    self.tail = new_node
+
+            node = node.next
+
     def insert(self, after_node, new_node):
-        if not after_node:
-            new_node.next = self.head
-            self.head = new_node
-
-            if not self.tail:
-                self.tail = new_node
+        if after_node is None:
+            self._insert_in_tail(new_node)
         else:
-            node = self.head
-            while node:
-                if node == after_node:
-                    new_node.next = after_node.next
-                    after_node.next = new_node
-
-                    if self.tail is after_node:
-                        self.tail = new_node
-
-                node = node.next
+            self._insert_in_body(new_node, after_node)

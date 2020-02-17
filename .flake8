@@ -12,6 +12,7 @@ exclude =
     project/settings/*,
     valid_xml.py,
     */custom_validators/*
+    */tests/*
 
 max_complexity = 10
 max-line-length = 120

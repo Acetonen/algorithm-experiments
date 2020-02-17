@@ -10,6 +10,7 @@ pytest = "*"
 wemake-python-styleguide = "*"
 flake8 = "*"
 pytest-flake8 = "*"
+lettuce = "*"
 
 [requires]
 python_version = "3.8"
