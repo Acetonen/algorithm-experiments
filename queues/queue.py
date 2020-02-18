@@ -6,7 +6,6 @@ class Queue:
         self.queue.append(item)
 
     def dequeue(self):
-        # выдача из головы
         head = self.queue[0] if self.queue else None
         self.queue = self.queue[1:]
 
