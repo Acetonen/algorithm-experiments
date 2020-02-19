@@ -19,7 +19,7 @@ class LinkedList:
     def print_all_nodes(self):
         node = self.head
         while node:
-            print(node.value)
+            print(node.value)    # noqa
             node = node.next
 
     def find(self, val):
@@ -80,7 +80,7 @@ class LinkedList:
         self.head = None
         self.tail = None
 
-    def len(self):
+    def len(self):  # noqa
         length = 0
         node = self.head
 

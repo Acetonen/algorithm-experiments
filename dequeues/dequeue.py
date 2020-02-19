@@ -2,20 +2,20 @@ class Deque:
     def __init__(self):
         self.queue = list()
 
-    def addFront(self, item):
+    def addFront(self, item):  # noqa
         self.queue = [item] + self.queue
 
-    def addTail(self, item):
+    def addTail(self, item):  # noqa
         self.queue.append(item)
 
-    def removeFront(self):
+    def removeFront(self):  # noqa
         head = self.queue[0] if self.queue else None
         self.queue = self.queue[1:]
 
         return head
 
-    def removeTail(self):
-        return self.queue.pop()
+    def removeTail(self):  # noqa
+        return self.queue.pop() if self.queue else None
 
     def size(self):
         return len(self.queue)
@@ -42,9 +42,8 @@ def check_palindrome(string):
     for char in string:
         deque.addTail(char)
 
-    for _ in range(deque.size()//2):
+    for _ in range(deque.size() // 2):
         if deque.removeFront() != deque.removeTail():
             return False
 
     return True
-
