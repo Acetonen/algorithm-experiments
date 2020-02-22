@@ -113,6 +113,17 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(all_two[0].value, 2)
         self.assertEqual(all_two[1].value, 2)
 
+    def test_find(self):
+        linked_list = self.get_linked_list([1, 2, 3, 4, 2])
+        node = linked_list.find(2)
+        self.assertEqual(node.value, 2)
+        node = linked_list.find(5)
+        self.assertEqual(node, None)
+
+    def test_print_all(self):
+        linked_list = self.get_linked_list([1, 2, 3, 4, 2])
+        linked_list.print_all_nodes()
+
     def test_find_all_but_none(self):
         linked_list = self.get_linked_list([1, 2, 3, 4, 2])
         all_six = linked_list.find_all(6)
@@ -128,8 +139,11 @@ class TestLinkedList(unittest.TestCase):
         linked_list.insert(node_list[0], Node(666))
         self.assertEqual(self.get_node_values_list(linked_list), [1, 666, 2, 3, 4])
 
+        linked_list.insert(node_list[-1], Node(777))
+        self.assertEqual(self.get_node_values_list(linked_list), [1, 666, 2, 3, 4, 777])
+
         linked_list.insert(None, Node(111))
-        self.assertEqual(self.get_node_values_list(linked_list), [111, 1, 666, 2, 3, 4])
+        self.assertEqual(self.get_node_values_list(linked_list), [111, 1, 666, 2, 3, 4, 777])
 
         linked_list.clean()
         linked_list.insert(None, Node(111))

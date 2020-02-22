@@ -248,6 +248,35 @@ def test_insert_in_head(nodes_values_results, bidirectional_linked_list):
     assert get_node_values_list(linked_list) == nodes_values_results[1]
 
 
+@pytest.mark.parametrize('nodes_values_results', [
+    ([5, 3], [5, 3, 666]),
+    ([], [666]),
+    ([3], [3, 666])
+])
+def test_insert_in_tail(nodes_values_results, bidirectional_linked_list):
+    linked_list = bidirectional_linked_list(nodes_values_results[0])
+    assert get_node_values_list(linked_list) == nodes_values_results[0]
+
+    linked_list.insert(None, Node(666))
+
+    assert linked_list.tail.value == 666
+    assert get_node_values_list(linked_list) == nodes_values_results[1]
+
+
+def test_insert_after_tail():
+    linked_list = LinkedList2()
+    node_list = [Node(number) for number in [1, 2, 3, 4]]
+
+    for node in node_list:
+        linked_list.add_in_tail(node)
+
+    linked_list.insert(node_list[-1], Node(666))
+
+    assert linked_list.tail.value == 666
+    assert get_node_values_list(linked_list) == [1, 2, 3, 4, 666]
+    assert linked_list.tail.value == 666
+
+
 def test_insert():
     linked_list = LinkedList2()
     node_list = [Node(number) for number in [1, 2, 3, 4]]

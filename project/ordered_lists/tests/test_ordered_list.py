@@ -245,6 +245,17 @@ def test_find(fixture, ordered_list):
 
 
 @pytest.mark.parametrize('fixture', [
+    [1, 2, 4, 5, 6],
+])
+def test_find_early_break(fixture, ordered_list):
+    ordered_list = ordered_list(True, fixture)
+
+    node = ordered_list.find(3)
+
+    assert node is None
+
+
+@pytest.mark.parametrize('fixture', [
     TestFixture([' abc', 'aac '], 1),
     TestFixture(['abc', 'aac'], 1),
 ])

@@ -109,3 +109,35 @@ def test_postfix_count(fixture):
     result = postfix_count(fixture.init_list)
 
     assert result == fixture.result
+
+
+# noinspection PyUnresolvedReferences
+@pytest.mark.parametrize('fixture', [
+    [2, 1, 3, 666],
+    [2, 666],
+    [666],
+])
+def test_peek(fixture):
+    stack = Stack()
+    stack.stack = fixture
+
+    peek_value = stack.peek()
+
+    assert peek_value == 666
+    assert stack.stack == fixture
+
+
+# noinspection PyUnresolvedReferences
+@pytest.mark.parametrize('fixture', [
+    [666, 2, 1, 3],
+    [666, 2],
+    [666],
+])
+def test_peek_reverse(fixture):
+    stack = ReverseStack()
+    stack.stack = fixture
+
+    peek_value = stack.peek()
+
+    assert peek_value == 666
+    assert stack.stack == fixture
