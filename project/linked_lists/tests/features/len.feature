@@ -1,11 +1,11 @@
-Feature: Get length of link
-  In order to to find length of linked list
-  We'll implement len() method
+Feature: Находим длину списка
+  Для того чтобы найти длину списка
+  Мы создали метод len()
 
-  Scenario Outline: Find the length of list
-    Given I have list as <list_of_numbers>
-    When I call .len method
-    Then I see the number of nodes in list as <length>
+  Scenario Outline: Найти длину списка
+    Given У нас есть лист <list_of_numbers>
+    When мы вызываем метод .len
+    Then получаем количество элементов как переменную <length>
 
     Examples:
       | list_of_numbers | length |

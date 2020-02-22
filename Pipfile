@@ -10,10 +10,11 @@ pytest = "*"
 wemake-python-styleguide = "*"
 flake8 = "*"
 pytest-flake8 = "*"
-lettuce = "*"
 ipython = "*"
 coverage = "*"
 pytest-cov = "*"
+lettuce = {editable = true,git = "https://github.com/adw0rd/lettuce-py3.git",ref = "master"}
+python-levenshtein = "*"
 
 [requires]
 python_version = "3.8"

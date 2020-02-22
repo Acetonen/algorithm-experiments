@@ -1,6 +1,6 @@
 from lettuce import *
 
-from project.linked_lists import LinkedList, Node
+from project.linked_lists.linked_list import LinkedList, Node
 
 
 def get_linked_list(list_of_numbers):
@@ -12,17 +12,18 @@ def get_linked_list(list_of_numbers):
     return linked_list
 
 
-@step('I have list as (.*)')
-def have_the_linked_list(step, list):  # noqa
-    world.linked_list = get_linked_list(list.split(' '))
+@step('У нас есть лист (.*)')
+def have_the_linked_list(step, list_of_numbers):  # noqa
+    world.linked_list = get_linked_list(
+        list_of_numbers.split(' ') if list_of_numbers else list()
+    )
 
 
-@step('I call .len method')
+@step('мы вызываем метод .len')
 def call_th_length_method(step):  # noqa
     world.length = world.linked_list.len()
 
 
-@step('I see the number of nodes in list as (\d+)')
-def check_number(step, length):
-    assert world.length == length, \
-        "Got %d" % world.length
+@step('получаем количество элементов как переменную (\d+)')
+def check_number(step, length):  # noqa
+    assert world.length == int(length), "Получили %d" % world.length

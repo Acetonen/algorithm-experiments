@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3f5a47a8482118d13c394e8eda7c901e1f32a48a8068f762c1976380c7042f8f"
+            "sha256": "4fed5af47b7c3a42b29a5d0c27be2272bfd2d7db3c142a9f24ce94612b8b3d85"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -366,11 +366,9 @@
             "version": "==0.16.0"
         },
         "lettuce": {
-            "hashes": [
-                "sha256:e9a86f98c7dbe860d9b51f8493a1f039663dcb05fddbad2e8c042ede33cc3c22"
-            ],
-            "index": "pypi",
-            "version": "==0.2.23"
+            "editable": true,
+            "git": "https://github.com/adw0rd/lettuce-py3.git",
+            "ref": "ae388f5d54eb55148c9dadb4d1a8808fac4bb2a5"
         },
         "linecache2": {
             "hashes": [
@@ -537,6 +535,13 @@
             "index": "pypi",
             "version": "==1.0.4"
         },
+        "python-levenshtein": {
+            "hashes": [
+                "sha256:033a11de5e3d19ea25c9302d11224e1a1898fe5abd23c61c7c360c25195e3eb1"
+            ],
+            "index": "pypi",
+            "version": "==0.12.0"
+        },
         "python-mimeparse": {
             "hashes": [
                 "sha256:76e4b03d700a641fd7761d3cd4fdbbdcd787eade1ebfac43f877016328334f78",
@@ -610,9 +615,9 @@
         },
         "sure": {
             "hashes": [
-                "sha256:3c8d5271fb18e2c69e2613af1ad400d8df090f1456081635bd3171847303cdaa"
+                "sha256:95bc7ce501b7d767a35f44de0c8ed7f9c7c5255c4b95b336ad0ae9e02f5401b3"
             ],
-            "version": "==1.4.11"
+            "version": "==1.4.1"
         },
         "testfixtures": {
             "hashes": [

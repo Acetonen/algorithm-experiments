@@ -81,6 +81,7 @@ def test_add_for_create_list_descending(fixture, ordered_list):
     assert ordered_list.tail.next is None
 
 
+# noinspection DuplicatedCode
 @pytest.mark.parametrize('fixture', [
     TestFixture([2, 4, 8, True], [2, 4, 5, 8]),
     TestFixture([8, 4, 2, False], [8, 5, 4, 2]),
