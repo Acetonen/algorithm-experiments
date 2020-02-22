@@ -2,8 +2,8 @@ from collections import namedtuple
 
 import pytest
 
-from queues.queue import Queue, rotate_queue, QueueFromTwoStack
-from stacks.stack import Stack
+from project.queues.queue import Queue, rotate_queue, QueueFromTwoStack
+from project.stacks.stack import Stack
 
 TestFixture = namedtuple('TestFixture', 'init_list result')
 

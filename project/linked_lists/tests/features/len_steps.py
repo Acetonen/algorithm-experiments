@@ -1,6 +1,6 @@
 from lettuce import *
 
-from linked_lists.linked_list import LinkedList, Node
+from project.linked_lists import LinkedList, Node
 
 
 def get_linked_list(list_of_numbers):

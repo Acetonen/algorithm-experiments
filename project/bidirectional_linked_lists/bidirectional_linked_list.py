@@ -55,7 +55,7 @@ class LinkedList2:
 
         return length
 
-    def working_with_head_deletion(self, all_):
+    def _working_with_head_deletion(self, all_):
         if self.current_node.next:
             self.head = self.current_node.next
             self.head.prev = None
@@ -69,7 +69,7 @@ class LinkedList2:
             self.tail = None
             self.exit_cycle = True  # noqa
 
-    def working_with_body_deletion(self, all_):
+    def _working_with_body_deletion(self, all_):
         self.current_node.prev.next = self.current_node.next
 
         if self.current_node.next:
@@ -77,20 +77,20 @@ class LinkedList2:
         else:
             self.tail = self.current_node.prev
 
-        self.current_node = self.current_node.next
+        self.current_node = self.current_node.next  # noqa
         if not all_:
             self.exit_cycle = True  # noqa
 
     def delete(self, val, all_=False):  # noqa
         self.current_node = self.head
-        self.exit_cycle = False
+        self.exit_cycle = False  # noqa
 
         while self.current_node and not self.exit_cycle:
             if self.current_node.value == val:
                 if self.current_node.prev is None:
-                    self.working_with_head_deletion(all_)
+                    self._working_with_head_deletion(all_)
                 else:
-                    self.working_with_body_deletion(all_)
+                    self._working_with_body_deletion(all_)
             else:
                 self.current_node = self.current_node.next  # noqa
 
@@ -98,7 +98,7 @@ class LinkedList2:
         self.head = new_node
         self.tail = new_node
 
-    def _insert_in_head(self, new_node):
+    def _insert_in_tail(self, new_node):
         new_node.prev = self.tail
         self.tail.next = new_node
         self.tail = new_node
@@ -118,7 +118,7 @@ class LinkedList2:
 
     def insert(self, after_node, new_node):
         if not after_node and self.len() != 0:
-            self._insert_in_head(new_node)
+            self._insert_in_tail(new_node)
         elif not after_node and self.len() == 0:
             self._insert_in_empty_list(new_node)
         else:

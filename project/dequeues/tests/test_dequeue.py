@@ -2,7 +2,7 @@ from collections import namedtuple
 
 import pytest
 
-from dequeues.dequeue import Deque, rotate_queue_left, rotate_queue_right, check_palindrome
+from project.dequeues.dequeue import Deque, rotate_queue_left, rotate_queue_right, check_palindrome
 
 TestFixture = namedtuple('TestFixture', 'init_list result')
 

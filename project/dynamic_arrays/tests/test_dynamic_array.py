@@ -1,8 +1,9 @@
 # flake8: noqa
+from collections import namedtuple
+
 import pytest
 
-from dynamic_arrays.dynamic_array import DynArray
-from collections import namedtuple
+from project.dynamic_arrays.dynamic_array import DynArray
 
 TestFixture = namedtuple('TestFixture', 'init_list index result')
 

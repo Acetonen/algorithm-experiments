@@ -1,5 +1,5 @@
 import pytest
-from bidirectional_linked_lists.bidirectional_linked_list import Node, LinkedList2
+from project.bidirectional_linked_lists.bidirectional_linked_list import Node, LinkedList2
 
 
 @pytest.fixture

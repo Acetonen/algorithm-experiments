@@ -1,5 +1,5 @@
 import pytest
-from stacks.stack import ReverseStack, Stack, validate_parentheses, postfix_count
+from project.stacks.stack import ReverseStack, Stack, validate_parentheses, postfix_count
 from collections import namedtuple
 
 TestFixture = namedtuple('TestFixture', 'init_list result')
