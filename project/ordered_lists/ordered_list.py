@@ -1,6 +1,7 @@
 COMPARE_DICT = {  # noqa
     -1: True,
     1: False,
+    0: 'equal',
 }
 
 
@@ -43,7 +44,11 @@ class OrderedList:
             self.tail = new_node
 
     def _make_compare(self, value1, value2) -> bool:
-        return COMPARE_DICT[self.compare(value1, value2)] == self.__ascending
+        compare_result = COMPARE_DICT[self.compare(value1, value2)]
+        if compare_result == 'equal':
+            return True
+
+        return compare_result == self.__ascending
 
     def _insert_between_two_nodes(self, node, new_node):
         new_node.next = node.next

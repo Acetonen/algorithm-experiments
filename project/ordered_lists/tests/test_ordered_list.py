@@ -98,6 +98,24 @@ def test_add_in_exists_list(fixture, ordered_list):
     assert ordered_list.tail.next is None
 
 
+# noinspection DuplicatedCode
+@pytest.mark.parametrize('fixture', [
+    TestFixture([2, 4, 8, True], [2, 4, 4, 8]),
+    TestFixture([8, 4, 2, False], [8, 4, 4, 2]),
+])
+def test_add_in_exists_list_exists_element(fixture, ordered_list):
+    ordered_list = ordered_list(fixture.init_list.pop(), fixture.init_list)  # noqa
+    ordered_list.add(4)
+
+    assert get_node_values_list(ordered_list) == fixture.result  # noqa
+    assert ordered_list.head.value == fixture.init_list[0]  # noqa
+    assert ordered_list.tail.value == fixture.init_list[-1]  # noqa
+    assert ordered_list.head.prev is None
+    assert ordered_list.head.next.value == fixture.result[1]  # noqa
+    assert ordered_list.tail.prev.value == fixture.result[-2]  # noqa
+    assert ordered_list.tail.next is None
+
+
 @pytest.mark.parametrize('fixture', [
     TestFixture([], [5]),
 ])
