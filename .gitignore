@@ -166,3 +166,5 @@ dmypy.json
 out
 gen
 .idea/
+.bak
+.mutmut-cache
