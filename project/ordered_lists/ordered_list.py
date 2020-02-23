@@ -68,7 +68,7 @@ class OrderedList:
                 or self._make_compare(new_node.value, node.next.value)
             ):
                 self._insert_between_two_nodes(node, new_node)
-                break
+                break  # pragma: no mutate
 
             node = node.next
 
@@ -123,7 +123,7 @@ class OrderedList:
                     self._working_with_head_deletion()
                 else:
                     self._working_with_body_deletion()
-                break
+                break  # pragma: no mutate
             else:
                 self.current_node = self.current_node.next  # noqa
 

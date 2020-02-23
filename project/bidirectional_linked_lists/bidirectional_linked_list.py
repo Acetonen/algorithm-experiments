@@ -67,7 +67,7 @@ class LinkedList2:
         else:
             self.head = None
             self.tail = None
-            self.exit_cycle = True  # noqa
+            self.exit_cycle = True  # noqa  # pragma: no mutate
 
     def _working_with_body_deletion(self, all_):
         self.current_node.prev.next = self.current_node.next
@@ -85,7 +85,7 @@ class LinkedList2:
         self.current_node = self.head
         self.exit_cycle = False  # noqa
 
-        while self.current_node and not self.exit_cycle:
+        while self.current_node and not self.exit_cycle:  # pragma: no mutate
             if self.current_node.value == val:
                 if self.current_node.prev is None:
                     self._working_with_head_deletion(all_)
@@ -106,7 +106,7 @@ class LinkedList2:
     def _insert_in_body(self, after_node, new_node):
         node = self.head
         while node:
-            if node == after_node:
+            if node == after_node:  # pragma: no mutate
                 new_node.next = after_node.next
                 new_node.prev = after_node
                 after_node.next = new_node
