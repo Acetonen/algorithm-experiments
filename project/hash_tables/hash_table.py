@@ -1,27 +1,35 @@
 class HashTable:
-    def __init__(self, sz, stp):
-        self.size = sz
-        self.step = stp
-        self.slots = [None] * self.size
+    def __init__(self, size, step):
+        self.size = size
+        self.step = step
+        self.slots = [None for _ in range(self.size)]
 
     def hash_fun(self, value):
-        # в качестве value поступают строки!
-
-        # всегда возвращает корректный индекс слота
-        return 0
+        return hash(value) % self.size
 
     def seek_slot(self, value):
-        # находит индекс пустого слота для значения, или None
-        return None
+        index = self.hash_fun(value)
+
+        for _ in range(self.size):
+            if self.slots[index] is None:
+                return index
+
+            index += self.step
+            index = index if index < self.size else index - self.size
 
     def put(self, value):
-        # записываем значение по хэш-функции
+        index = self.seek_slot(value)
+        if index is not None:
+            self.slots[index] = value
 
-        # возвращается индекс слота или None,
-        # если из-за коллизий элемент не удаётся
-        # разместить
-        return None
+        return index
 
     def find(self, value):
-        # находит индекс слота со значением, или None
-        return None
+        index = self.hash_fun(value)
+
+        for _ in range(self.size):
+            if self.slots[index] == value:
+                return index
+
+            index += self.step
+            index = index if index < self.size else index - self.size

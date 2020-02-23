@@ -1,14 +1,14 @@
 class Node:
     def __init__(self, value):
         self.value = value
-        self.prev = None
-        self.next = None
+        self.prev = None  # pragma: no mutate
+        self.next = None  # pragma: no mutate
 
 
 class LinkedList2:
     def __init__(self):
-        self.head = None
-        self.tail = None
+        self.head = None  # pragma: no mutate
+        self.tail = None  # pragma: no mutate
 
     def add_in_tail(self, item):
         if self.head is None:
@@ -62,7 +62,7 @@ class LinkedList2:
             self.current_node = self.current_node.next  # noqa
 
             if not all_:
-                self.exit_cycle = True
+                self.exit_cycle = True  # pragma: no mutate
 
         else:
             self.head = None
@@ -79,11 +79,11 @@ class LinkedList2:
 
         self.current_node = self.current_node.next  # noqa
         if not all_:
-            self.exit_cycle = True  # noqa
+            self.exit_cycle = True  # noqa  # pragma: no mutate
 
-    def delete(self, val, all_=False):  # noqa
+    def delete(self, val, all_=False):
         self.current_node = self.head
-        self.exit_cycle = False  # noqa
+        self.exit_cycle = False  # noqa  # pragma: no mutate
 
         while self.current_node and not self.exit_cycle:  # pragma: no mutate
             if self.current_node.value == val:
@@ -99,7 +99,6 @@ class LinkedList2:
         self.tail = new_node
 
     def _insert_in_tail(self, new_node):
-        new_node.prev = self.tail
         self.tail.next = new_node
         self.tail = new_node
 
