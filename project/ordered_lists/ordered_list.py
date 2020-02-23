@@ -8,14 +8,14 @@ COMPARE_DICT = {  # noqa
 class Node:
     def __init__(self, value):
         self.value = value
-        self.prev = None
-        self.next = None
+        self.prev = None  # pragma: no mutate
+        self.next = None  # pragma: no mutate
 
 
 class OrderedList:
     def __init__(self, asc):
-        self.head = None
-        self.tail = None
+        self.head = None  # pragma: no mutate
+        self.tail = None  # pragma: no mutate
         self.__ascending = asc
 
     @staticmethod

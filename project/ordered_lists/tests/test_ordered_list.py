@@ -280,3 +280,12 @@ def test_find_early_break(fixture, ordered_list):
 ])
 def test_string_compare(fixture):
     assert OrderedStringList(True).compare(*fixture.init_list) == fixture.result  # noqa
+
+
+@pytest.mark.parametrize('fixture', [
+    [4, 5],
+])
+def test_len(fixture, ordered_list):
+    ordered_list = ordered_list(True, fixture)
+
+    assert ordered_list.len() == 2

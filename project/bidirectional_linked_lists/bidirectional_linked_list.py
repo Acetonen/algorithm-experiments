@@ -55,7 +55,7 @@ class LinkedList2:
 
         return length
 
-    def _working_with_head_deletion(self, all_):
+    def _working_with_head_deletion(self, all_):  # pragma: no mutate
         if self.current_node.next:
             self.head = self.current_node.next
             self.head.prev = None

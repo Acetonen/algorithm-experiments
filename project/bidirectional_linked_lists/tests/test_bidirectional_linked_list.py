@@ -235,10 +235,23 @@ def test_delete_many_leave_one(nodes_values, bidirectional_linked_list):
 
 @pytest.mark.parametrize('nodes_values_results', [
     ([5, 3], [666, 5, 3]),
-    ([], [666]),
     ([3], [666, 3])
 ])
 def test_insert_in_head(nodes_values_results, bidirectional_linked_list):
+    linked_list = bidirectional_linked_list(nodes_values_results[0])
+    assert get_node_values_list(linked_list) == nodes_values_results[0]
+
+    linked_list.add_in_head(Node(666))
+
+    assert linked_list.head.value == 666
+    assert linked_list.head.next.prev is not None
+    assert get_node_values_list(linked_list) == nodes_values_results[1]
+
+
+@pytest.mark.parametrize('nodes_values_results', [
+    ([], [666]),
+])
+def test_insert_in_empty_head(nodes_values_results, bidirectional_linked_list):
     linked_list = bidirectional_linked_list(nodes_values_results[0])
     assert get_node_values_list(linked_list) == nodes_values_results[0]
 

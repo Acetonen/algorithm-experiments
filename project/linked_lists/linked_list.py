@@ -1,13 +1,13 @@
 class Node:
     def __init__(self, value):
         self.value = value
-        self.next = None
+        self.next = None  # pragma: no mutate
 
 
 class LinkedList:
     def __init__(self):
-        self.head = None
-        self.tail = None
+        self.head = None  # pragma: no mutate
+        self.tail = None  # pragma: no mutate
 
     def add_in_tail(self, item):
         if self.head is None:
