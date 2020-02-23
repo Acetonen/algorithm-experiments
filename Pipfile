@@ -13,8 +13,9 @@ pytest-flake8 = "*"
 ipython = "*"
 coverage = "*"
 pytest-cov = "*"
-lettuce = {editable = true,git = "https://github.com/adw0rd/lettuce-py3.git",ref = "master"}
 python-levenshtein = "*"
+lettuce = {editable = true,git = "https://github.com/adw0rd/lettuce-py3.git",ref = "master"}
+mutmut = "*"
 
 [requires]
 python_version = "3.8"
