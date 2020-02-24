@@ -16,12 +16,6 @@ class LinkedList:
             self.tail.next = item
         self.tail = item
 
-    def print_all_nodes(self):
-        node = self.head
-        while node:
-            print(node.value)    # noqa
-            node = node.next
-
     def find(self, val):
         node = self.head
         while node is not None:
