@@ -4,7 +4,7 @@ from random import choice
 
 import pytest
 
-from project.assotiative_arrays.assotiative_array import NativeDictionary
+from project.native_dictionaries.native_dictionary import NativeDictionary
 
 SIZE = 5
 TestFixture = namedtuple('TestFixture', 'init_list result')
