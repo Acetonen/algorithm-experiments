@@ -90,8 +90,8 @@ def test_insert_index_out_of_range(dynamic_array, fixture):
     assert get_dyn_array_values_list(dynamic_array) == list(range(3))
     assert len(dynamic_array) == 3
 
-    with pytest.raises(Exception):
-        dynamic_array.insert(666, fixture.index)
+    with pytest.raises(IndexError):
+        dynamic_array.insert(fixture.index, 666)
 
 
 # noinspection PyUnresolvedReferences
@@ -117,13 +117,14 @@ def test_delete_without_resize(dynamic_array, fixture):
     dynamic_array = dynamic_array(fixture.init_list)
     assert get_dyn_array_values_list(dynamic_array) == list(range(15))
     assert len(dynamic_array) == 15
-    assert dynamic_array.capacity == 16
+    dynamic_array.capacity = 28
+    assert dynamic_array.capacity == 28
 
     dynamic_array.delete(fixture.index)
 
     assert get_dyn_array_values_list(dynamic_array) == fixture.result
     assert len(dynamic_array) == 14
-    assert dynamic_array.capacity == 16
+    assert dynamic_array.capacity == 28
 
 
 # noinspection PyUnresolvedReferences
@@ -163,3 +164,14 @@ def test_delete_with_resize(dynamic_array, fixture):
     assert get_dyn_array_values_list(dynamic_array) == fixture.result
     assert len(dynamic_array) == 19
     assert dynamic_array.capacity == 26
+
+
+@pytest.mark.parametrize('fixture', [
+    TestFixture(range(3), -1, None),
+    TestFixture(range(3), 3, None),
+    TestFixture(range(3), 4, None),
+])
+def test_get_item_out_of_range(dynamic_array, fixture):
+    dynamic_array = dynamic_array(fixture.init_list)
+    with pytest.raises(IndexError):
+        dynamic_array[fixture.index]

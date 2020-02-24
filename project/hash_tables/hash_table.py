@@ -2,7 +2,7 @@ class HashTable:
     def __init__(self, size, step):
         self.size = size
         self.step = step
-        self.slots = [None for _ in range(self.size)]
+        self.slots = [None for _ in range(self.size)]  # pragma: no mutate
 
     def hash_fun(self, value):
         return hash(value) % self.size

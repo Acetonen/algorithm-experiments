@@ -93,6 +93,7 @@ def test_empty_pop(fixture):
     TestFixture('())(', 'Not balanced string'),
     TestFixture('))((', 'Not balanced string'),
     TestFixture('((())', 'Not balanced string'),
+    TestFixture('(()))', 'Not balanced string'),
 ])
 def test_validate_parentheses(fixture):
     result = validate_parentheses(fixture.init_list)
@@ -104,6 +105,7 @@ def test_validate_parentheses(fixture):
 @pytest.mark.parametrize('fixture', [
     TestFixture('8 2 + 5 * 9 + =', 59),
     TestFixture('1 2 + 3 * =', 9),
+    TestFixture('5 2 - 3 / =', -1),
 ])
 def test_postfix_count(fixture):
     result = postfix_count(fixture.init_list)

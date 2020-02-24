@@ -111,9 +111,9 @@ def test_clean(nodes_values, bidirectional_linked_list):
 
 # noinspection DuplicatedCode
 @pytest.mark.parametrize('nodes_values', [
-    [4, 3, 5],
-    [3, 4, 5],
-    [4, 5, 3],
+    [4, 3, 5, 3],
+    [3, 4, 5, 3],
+    [4, 5, 3, 3],
 ])
 def test_delete_one_from_many(nodes_values, bidirectional_linked_list):
     linked_list = bidirectional_linked_list(nodes_values)
@@ -121,14 +121,14 @@ def test_delete_one_from_many(nodes_values, bidirectional_linked_list):
 
     linked_list.delete(3)
 
-    assert linked_list.len() == 2
+    assert linked_list.len() == 3
 
     assert linked_list.head.value == 4
     assert linked_list.head.prev is None
     assert linked_list.head.next.value == 5
 
-    assert linked_list.tail.value == 5
-    assert linked_list.tail.prev.value == 4
+    assert linked_list.tail.value == 3
+    assert linked_list.tail.prev.value == 5
     assert linked_list.tail.next is None
 
 
@@ -262,6 +262,19 @@ def test_insert_in_empty_head(nodes_values_results, bidirectional_linked_list):
 
 
 @pytest.mark.parametrize('nodes_values_results', [
+    ([], [666]),
+])
+def test_insert_in_empty_list(nodes_values_results, bidirectional_linked_list):
+    linked_list = bidirectional_linked_list(nodes_values_results[0])
+    assert get_node_values_list(linked_list) == nodes_values_results[0]
+
+    linked_list.insert(None, Node(666))
+
+    assert linked_list.head.value == 666
+    assert get_node_values_list(linked_list) == nodes_values_results[1]
+
+
+@pytest.mark.parametrize('nodes_values_results', [
     ([5, 3], [5, 3, 666]),
     ([], [666]),
     ([3], [3, 666])
@@ -297,5 +310,7 @@ def test_insert():
     for node in node_list:
         linked_list.add_in_tail(node)
 
-    linked_list.insert(node_list[0], Node(666))
+    new_node = Node(666)
+    linked_list.insert(node_list[0], new_node)
     assert get_node_values_list(linked_list) == [1, 666, 2, 3, 4]
+    assert new_node.prev.value == 1

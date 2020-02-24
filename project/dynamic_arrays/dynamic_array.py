@@ -15,7 +15,7 @@ class DynArray:
 
     def __getitem__(self, index):
         if index < 0 or index >= self.count:
-            raise IndexError('Index is out of bounds')
+            raise IndexError('Index is out of bounds')  # pragma: no mutate
 
         return self.array[index]
 
@@ -39,7 +39,7 @@ class DynArray:
 
     def _check_index_range(self, index):
         if index < 0 or index > self.count:
-            raise IndexError('Index is out of bounds')
+            raise IndexError('Index is out of bounds')  # pragma: no mutate
 
     def _check_for_append(self, element, index):
         if index == self.count:
@@ -52,9 +52,9 @@ class DynArray:
 
     def _check_for_reduce_size(self):
         if self.count < self.capacity / 2:
-            reduced_size = self.capacity // REDUCE_COEFFICIENT
-            new_capacity = reduced_size if reduced_size > MINIMAL_CAPACITY else MINIMAL_CAPACITY
-            self.resize(int(new_capacity))
+            reduced_size = int(self.capacity / REDUCE_COEFFICIENT)
+            new_capacity = reduced_size if reduced_size >= MINIMAL_CAPACITY else MINIMAL_CAPACITY  # pragma: no mutate
+            self.resize(new_capacity)
 
     def insert(self, index, element):
         self._check_index_range(index)

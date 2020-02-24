@@ -44,7 +44,7 @@ class OrderedList:
             self.tail = new_node
 
     def _make_compare(self, value1, value2) -> bool:
-        compare_result = COMPARE_DICT[self.compare(value1, value2)]
+        compare_result = COMPARE_DICT[self.compare_stas(value1, value2)]
         if compare_result == 'equal':
             return True
 

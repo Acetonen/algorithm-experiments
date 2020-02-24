@@ -24,7 +24,7 @@ class Stack:
         except IndexError:
             return
 
-    def push(self, value):
+    def push(self, value=None):  # pragma no mutate
         return self.stack.append(value)
 
     def peek(self):
@@ -47,7 +47,7 @@ class ReverseStack:
         self.stack = self.stack[1:]
         return first
 
-    def push(self, value):
+    def push(self, value=None):  # pragma no mutate
         self.stack = [value] + self.stack
 
     def peek(self):
@@ -59,8 +59,8 @@ def validate_parentheses(string):
 
     for char in string:
         if char == '(':
-            stack.push(0)
-        elif char == ')' and stack.size() > 0:
+            stack.push()
+        elif char == ')' and stack.size():
             stack.pop()
         else:
             return UNSUCCESS_MESSAGE

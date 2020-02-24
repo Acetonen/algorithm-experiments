@@ -15,15 +15,15 @@ def get_random_string():
 
 
 @pytest.mark.parametrize('fixture', [
-    TestFixture([1, None, 3, 4, 5], 1),
-    TestFixture([1, 2, 3, 4, 5], 5),
-    TestFixture([1, 2, 3, 'test', 5], 3),
+    'test string',
+    't',
+    '',
+    get_random_string(),
 ])
 def test_hash_fun(fixture):
-    native_dictionary = NativeDictionary(SIZE)
-    native_dictionary.slots = fixture.init_list  # noqa
+    hash_table = NativeDictionary(SIZE)
 
-    assert native_dictionary.hash_fun('test') == fixture.result  # noqa
+    assert hash_table.hash_fun(fixture) < SIZE
 
 
 @pytest.mark.parametrize('fixture', [

@@ -1,6 +1,6 @@
 class Queue:
     def __init__(self):
-        self.queue = list()
+        self.queue = list()  # pragma: no mutate
 
     def enqueue(self, item):
         self.queue.append(item)

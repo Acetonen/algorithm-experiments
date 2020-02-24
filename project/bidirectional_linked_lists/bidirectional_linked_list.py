@@ -118,7 +118,7 @@ class LinkedList2:
     def insert(self, after_node, new_node):
         if not after_node and self.len() != 0:
             self._insert_in_tail(new_node)
-        elif not after_node and self.len() == 0:
+        elif after_node is None:
             self._insert_in_empty_list(new_node)
         else:
             self._insert_in_body(after_node, new_node)
