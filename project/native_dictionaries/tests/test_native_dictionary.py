@@ -48,6 +48,7 @@ def test_put(fixture):
     native_dictionary.put('test', 'test')
 
     assert native_dictionary.values == fixture.result  # noqa
+    assert native_dictionary.get('test') == 'test'
 
 
 @pytest.mark.parametrize('fixture', [

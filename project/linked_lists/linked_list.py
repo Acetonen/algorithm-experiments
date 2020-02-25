@@ -51,7 +51,7 @@ class LinkedList:
     def delete(self, val, all_=False):  # noqa
         self.prev_node = None
         self.current_node = self.head
-        self.exit_cycle = False
+        self.exit_cycle = False  # pragma: no mutate
 
         while self.current_node and not self.exit_cycle:  # pragma: no mutate
             if self.current_node.value == val:

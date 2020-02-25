@@ -37,6 +37,9 @@ def test_compare(fixture):
     TestFixture([1, 2], -1),
     TestFixture([2, 2], 0),
     TestFixture([2, 1], 1),
+    TestFixture([1, 999], -1),
+    TestFixture([666, 666], 0),
+    TestFixture([999, 1], 1),
 ])
 def test_compare_stas(fixture):
     assert OrderedList.compare_stas(*fixture.init_list) == fixture.result  # noqa
@@ -84,7 +87,10 @@ def test_add_for_create_list_descending(fixture, ordered_list):
 # noinspection DuplicatedCode
 @pytest.mark.parametrize('fixture', [
     TestFixture([2, 4, 8, True], [2, 4, 5, 8]),
+    TestFixture([2, 5, 8, True], [2, 5, 5, 8]),
     TestFixture([8, 4, 2, False], [8, 5, 4, 2]),
+    TestFixture([8, 5, 2, False], [8, 5, 5, 2]),
+    TestFixture([5, 4, 2, False], [5, 5, 4, 2]),
 ])
 def test_add_in_exists_list(fixture, ordered_list):
     ordered_list = ordered_list(fixture.init_list.pop(), fixture.init_list)  # noqa
@@ -141,6 +147,7 @@ def test_clean(fixture, ordered_list):
     assert ordered_list.len() == 0
     assert ordered_list.head is None
     assert ordered_list.tail is None
+    assert ordered_list.ascending is True
 
 
 # noinspection DuplicatedCode
@@ -277,6 +284,10 @@ def test_find_early_break(fixture, ordered_list):
 @pytest.mark.parametrize('fixture', [
     TestFixture([' abc', 'aac '], 1),
     TestFixture(['abc', 'aac'], 1),
+    TestFixture([' aac', 'aac'], 0),
+    TestFixture([' aac', 'aac '], 0),
+    TestFixture([' aac', 'abc '], -1),
+    TestFixture(['aac', 'abc'], -1),
 ])
 def test_string_compare(fixture):
     assert OrderedStringList(True).compare(*fixture.init_list) == fixture.result  # noqa

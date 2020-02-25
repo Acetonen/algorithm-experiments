@@ -268,6 +268,7 @@ def test_insert_after_none(nodes_values_results, linked_list):
     linked_list.insert(None, Node(666))
 
     assert linked_list.head.value == 666
+    assert linked_list.tail.value is not None
     assert get_node_values_list(linked_list) == nodes_values_results[1]
 
 

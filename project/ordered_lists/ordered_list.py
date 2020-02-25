@@ -1,7 +1,7 @@
 COMPARE_DICT = {  # noqa
     -1: True,
     1: False,
-    0: 'equal',
+    0: 'equal',  # pragma: no mutate
 }
 
 
@@ -18,17 +18,21 @@ class OrderedList:
         self.tail = None  # pragma: no mutate
         self.__ascending = asc
 
-    @staticmethod
+    @property
+    def ascending(self):
+        return self.__ascending
+
+    @staticmethod  # pragma: no mutate
     def compare(value1, value2):
         return (value1 < value2 and -1) or (value1 > value2 and 1) or 0  # noqa
 
-    @staticmethod
+    @staticmethod  # pragma: no mutate
     def compare_stas(value1, value2):
-        return (value1 - value2) // (abs(value1 - value2) or 1)
+        return (value1 - value2) / (abs(value1 - value2) or True)
 
-    @staticmethod
+    @staticmethod  # pragma: no mutate
     def compare_shortest(value1, value2):
-        return 0 if value1 == value2 else (-1, 1)[value1 > value2]
+        return 0 if value1 == value2 else (-1, 1)[value1 > value2]  # pragma: no mutate
 
     def _add_in_empty_list(self, new_node):
         self.head = new_node
@@ -45,8 +49,6 @@ class OrderedList:
 
     def _make_compare(self, value1, value2) -> bool:
         compare_result = COMPARE_DICT[self.compare_stas(value1, value2)]
-        if compare_result == 'equal':
-            return True
 
         return compare_result == self.__ascending
 
@@ -98,7 +100,6 @@ class OrderedList:
         if self.current_node.next:
             self.head = self.current_node.next
             self.head.prev = None
-            self.current_node = self.current_node.next  # noqa
 
         else:
             self.head = None
@@ -111,8 +112,6 @@ class OrderedList:
             self.current_node.next.prev = self.current_node.prev
         else:
             self.tail = self.current_node.prev
-
-        self.current_node = self.current_node.next  # noqa
 
     def delete(self, val):  # noqa
         self.current_node = self.head

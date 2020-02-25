@@ -1,6 +1,6 @@
 class NativeDictionary:
     def __init__(self, size):
-        self.step = 3
+        self.step = 3  # pragma: no mutate
         self.size = size  # pragma: no mutate
         self.slots = [None for _ in range(self.size)]  # pragma: no mutate
         self.values = [None for _ in range(self.size)]  # pragma: no mutate
@@ -15,7 +15,7 @@ class NativeDictionary:
             if self.slots[index] == key:
                 return True
 
-            index += self.step
+            index += self.step  # pragma: no mutate
             index = index if index < self.size else index - self.size
 
         return False
@@ -27,7 +27,7 @@ class NativeDictionary:
             if self.slots[index] is None or self.slots[index] == key:
                 return index
 
-            index += self.step
+            index += self.step  # pragma: no mutate
             index = index if index < self.size else index - self.size
 
     def put(self, key, value):
