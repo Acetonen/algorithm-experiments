@@ -56,19 +56,34 @@ class PowerSet(HashTable):
             index += self.step
             index = index if index < self.table_size else index - self.table_size
 
-    def get(self, value):
+    def find_value(self, value, remove=False):
         index = self.hash_fun(value)
+        result = False
 
-        return self.get_from_slots(index) == value
+        for _ in range(self.table_size):
+
+            if self.get_from_slots(index) == value:
+
+                if remove:
+                    self.slots[index] = None
+
+                result = True
+                break  # pragma: no mutate
+
+            elif self.get_from_slots(index) is None:  # pragma: no mutate
+                break  # pragma: no mutate
+
+            index += self.step  # pragma: no mutate
+            index = index if index < self.table_size else index - self.table_size  # pragma: no mutate
+
+        return result
+
+    # noinspection DuplicatedCode
+    def get(self, value):
+        return self.find_value(value)
 
     def remove(self, value):
-        index = self.hash_fun(value)
-
-        if self.get_from_slots(index) == value:
-            self.slots[index] = None
-            return True
-
-        return False
+        return self.find_value(value, remove=True)
 
     def intersection(self, set2):
         results_set = PowerSet()

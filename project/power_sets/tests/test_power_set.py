@@ -91,6 +91,7 @@ def test_get(fixture):
 def test_remove(fixture):
     power_set = PowerSet()
     power_set.put(fixture)
+    power_set.put(fixture)
 
     assert power_set.size() == 1
     assert power_set.get(fixture) is True
