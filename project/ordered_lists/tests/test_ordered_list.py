@@ -69,6 +69,7 @@ def test_add_for_create_list_ascending(fixture, ordered_list):
 
 @pytest.mark.parametrize('fixture', [
     TestFixture([1, 2, 3], [3, 2, 1]),
+    TestFixture([1, 2, 3], [3, 2, 1]),
     TestFixture([3, 2, 1], [3, 2, 1]),
     TestFixture([2, 3, 1], [3, 2, 1]),
 ])
@@ -124,14 +125,15 @@ def test_add_in_exists_list_exists_element(fixture, ordered_list):
 
 
 @pytest.mark.parametrize('fixture', [
-    TestFixture([], [5]),
+    TestFixture([], [1]),
 ])
 def test_add_in_empty_list(fixture, ordered_list):
     ordered_list = ordered_list(True, fixture.init_list)  # noqa
-    ordered_list.add(5)
+    ordered_list.add(1)
+    ordered_list.add(1)
 
-    assert ordered_list.head.value == 5
-    assert ordered_list.tail.value == 5
+    assert ordered_list.head.value == 1
+    assert ordered_list.tail.value == 1
 
 
 @pytest.mark.parametrize('fixture', [

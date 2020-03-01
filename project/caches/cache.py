@@ -151,30 +151,135 @@ class OrderedList:
         return result
 
 
-class OrderedStringList(OrderedList):
-    def __init__(self, asc):
-        super().__init__(asc)
+# noinspection DuplicatedCode
+class NativeDictionary:
+    def __init__(self, size):
+        self.step = 3  # pragma: no mutate
+        self.size = size  # pragma: no mutate
+        self.slots = [None for _ in range(self.size)]  # pragma: no mutate
+        self.values = [None for _ in range(self.size)]  # pragma: no mutate
 
-    @staticmethod
-    def clean_from_start_spaces(string):
-        for index, char in enumerate(string):
-            if char != ' ':
-                return string[index:]
+    def hash_fun(self, value):
+        result = 0
+        constant = 17  # pragma: no mutate
 
-    @staticmethod
-    def clean_from_end_spaces(string):
-        reverse_string = list(string)
-        reverse_string.reverse()
+        for char in str(value):
+            result = (result * constant + ord(char)) % self.size
 
-        for index, char in enumerate(reverse_string):
-            if char != ' ':
-                return string[:-index] if index else string
+        return result
 
-    def clean_from_spaces(self, value):
-        return self.clean_from_start_spaces(self.clean_from_end_spaces(value))
+    def is_key(self, key):
+        index = self.hash_fun(key)
 
-    def compare(self, value1: str, value2: str) -> int:
-        value1 = self.clean_from_spaces(value1)
-        value2 = self.clean_from_spaces(value2)
+        for _ in range(self.size):
+            if self.slots[index] == key:
+                return True
 
-        return (value1 < value2 and -1) or (value1 > value2 and 1) or 0  # noqa
+            index += self.step  # pragma: no mutate
+            index = index if index < self.size else index - self.size
+
+        return False
+
+    def _seek_slot(self, key):
+        index = self.hash_fun(key)
+
+        for _ in range(self.size):
+            if self.slots[index] is None or self.slots[index] == key:
+                return index
+
+            index += self.step  # pragma: no mutate
+            index = index if index < self.size else index - self.size
+
+    def put(self, key, value):
+        index = self._seek_slot(key)
+
+        if index is not None:
+            self.slots[index] = key
+            self.values[index] = value
+
+        return index
+
+    def get(self, key):
+        index = self.hash_fun(key)
+
+        for _ in range(self.size):
+            if self.slots[index] == key:
+                return self.values[index]
+
+            index += self.step
+            index = index if index < self.size else index - self.size
+
+
+class NativeCache(NativeDictionary):
+    def __init__(self, size):
+        super().__init__(size)
+        self.hits = [0 for _ in range(self.size)]  # pragma: no mutate
+        self.hits_mapping = NativeDictionary(self.size)
+        self.hits_order = OrderedList(True)
+
+    def _remove_element_index_from_hits_mapping(self, index):
+        if self.hits[index] > 1:
+            mapping_set = self.hits_mapping.get(self.hits[index] - 1)
+            mapping_set.remove(index)  # noqa
+
+            if not mapping_set:
+                self.hits_order.delete(self.hits[index] - 1)
+
+    def _add_element_to_hits_mapping(self, index, mapping_set):
+        mapping_set.append(index)  # noqa
+        self.hits_mapping.put(self.hits[index], mapping_set)
+        self.hits_order.add(self.hits[index])
+
+    def _def_count_hits(self, index: int):
+        """Use count_mapping - NativeDictionaries where keys are hits and values are lists of element indexes."""
+        self.hits[index] += 1
+        mapping_set = self.hits_mapping.get(self.hits[index])
+
+        if not mapping_set:
+            mapping_set = list()
+
+        # Add element to hits_mapping:
+
+        self._add_element_to_hits_mapping(index, mapping_set)
+        self._remove_element_index_from_hits_mapping(index)
+
+    def _remove_most_unpopular_element(self):
+        if self.hits_order.len():
+            minimal_count = self.hits_order.head.value
+            minimal_count_list = self.hits_mapping.get(minimal_count)
+            index = minimal_count_list.pop()
+            if not minimal_count_list:
+                self.hits_order.delete(minimal_count)
+        else:
+            index = 0
+
+        self.hits[index] = 0
+
+        return index
+
+    def get(self, key):
+        index = self.hash_fun(key)
+
+        for _ in range(self.size):
+
+            if self.slots[index] == key:
+                self._def_count_hits(index)
+
+                return self.values[index]
+
+            elif self.slots[index] is None:
+                break
+
+            index += self.step
+            index = index if index < self.size else index - self.size
+
+    def put(self, key, value):
+        index = self._seek_slot(key)
+
+        if index is None:
+            index = self._remove_most_unpopular_element()
+
+        self.slots[index] = key
+        self.values[index] = value
+
+        return index
