@@ -175,3 +175,28 @@ def test_seek_slot(fixture):
     power_set.step = 2
 
     assert power_set.seek_slot(1) == fixture.result  # noqa
+
+
+def test_put_with_collision():
+    power_set = PowerSet()
+
+    assert power_set.hash_fun(1) == power_set.hash_fun('1')
+
+    power_set.put(1)
+    power_set.put('1')
+
+    assert power_set.size() == 2
+    assert power_set.get(1) is True
+    assert power_set.get('1') is True
+
+
+def test_remove_with_collision():
+    power_set = PowerSet()
+
+    power_set.put(1)
+    power_set.put('1')
+
+    assert power_set.size() == 2
+    assert power_set.remove(1) is True
+    assert power_set.size() == 1
+    assert power_set.get('1') is True

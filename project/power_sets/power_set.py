@@ -6,8 +6,13 @@ class HashTable:
         self.slots = [None for _ in range(self.table_size)]  # pragma: no mutate
 
     def hash_fun(self, value):
-        hash_result = hash(value) % self.table_size
-        return hash_result
+        result = 0
+        constant = 17  # pragma: no mutate
+
+        for char in str(value):
+            result = (result * constant + ord(char)) % self.table_size
+
+        return result
 
     def get_from_slots(self, index):
         return self.slots[index]
@@ -41,7 +46,7 @@ class PowerSet(HashTable):
     def size(self):
         set_size = 0
         for item in self.slots:
-            if item is not None:
+            if item is not None and item is not False:
                 set_size += 1
 
         return set_size
@@ -65,7 +70,7 @@ class PowerSet(HashTable):
             if self.get_from_slots(index) == value:
 
                 if remove:
-                    self.slots[index] = None
+                    self.slots[index] = False  # noqa
 
                 result = True
                 break  # pragma: no mutate
