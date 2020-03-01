@@ -95,7 +95,8 @@ def test_remove(fixture):
     assert power_set.size() == 1
     assert power_set.get(fixture) is True
 
-    power_set.remove(fixture)
+    assert power_set.remove(fixture) is True
+    assert power_set.remove('NOT') is False
 
     assert power_set.size() == 0
     assert power_set.get(fixture) is False
@@ -157,3 +158,19 @@ def test_issubset(fixture):
     power_set_two = create_power_Set_from_list(fixture.second_set)  # noqa
 
     assert power_set_one.issubset(power_set_two) == fixture.result  # noqa
+
+
+@pytest.mark.parametrize('fixture', [
+    TestFixture([1, 2, 3, 4, None, 6, 7, None], 7),
+    TestFixture([1, 2, 3, None, 5, 6, 7, None], 3),
+    TestFixture([1, 2, None, 4, 5, 6, 7, None], 7),
+    TestFixture([1, None, 3, 4, 5, 6, 7, None], 1),
+    TestFixture([None, 2, 3, 4, 5, 6, 7, None], 7),
+])
+def test_seek_slot(fixture):
+    power_set = PowerSet()
+    power_set.slots = fixture.init_list  # noqa
+    power_set.table_size = 8
+    power_set.step = 2
+
+    assert power_set.seek_slot(1) == fixture.result  # noqa

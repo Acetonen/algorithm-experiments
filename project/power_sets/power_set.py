@@ -12,16 +12,6 @@ class HashTable:
     def get_from_slots(self, index):
         return self.slots[index]
 
-    def seek_slot(self, value):
-        index = self.hash_fun(value)
-
-        for _ in range(self.table_size):
-            if self.get_from_slots(index) is None:
-                return index
-
-            index += self.step
-            index = index if index < self.table_size else index - self.table_size
-
     def put(self, value):
         index = self.seek_slot(value)
         if index is not None:
@@ -30,14 +20,14 @@ class HashTable:
         return index
 
     def find(self, value):
-        index = self.hash_fun(value)
+        index = self.hash_fun(value)  # pragma: no mutate
 
-        for _ in range(self.table_size):
-            if self.get_from_slots(index) == value:
+        for _ in range(self.table_size):  # pragma: no mutate
+            if self.get_from_slots(index) == value:  # pragma: no mutate
                 return index
 
-            index += self.step
-            index = index if index < self.table_size else index - self.table_size
+            index += self.step  # pragma: no mutate
+            index = index if index < self.table_size else index - self.table_size  # pragma: no mutate
 
 
 DEFAULT_STEP = 3  # pragma: no mutate
