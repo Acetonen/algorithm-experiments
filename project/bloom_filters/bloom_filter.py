@@ -25,6 +25,6 @@ class BloomFilter:
 
     def is_value(self, string):
         return bool(
-            self.bit_array[self.hash1(string)]
-            and self.bit_array[self.hash2(string)]
+            self.bit_array[self.hash1(string)]  # pragma: no mutate
+            and self.bit_array[self.hash2(string)]  # pragma: no mutate
         )
