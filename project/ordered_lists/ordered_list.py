@@ -66,7 +66,7 @@ class OrderedList:
         while node:
             if (
                 self._make_compare(node.value, new_node.value) and node.next is None
-                or node.next is not None and self._make_compare(new_node.value, node.next.value)
+                or node.next is not None and self._make_compare(new_node.value, node.next.value)  # pragma: no mutate
             ):
                 self._insert_between_two_nodes(node, new_node)
                 break  # pragma: no mutate

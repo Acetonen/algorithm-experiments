@@ -70,6 +70,18 @@ def test_put_in_full_cache():
     assert native_cache.hits == [3, 3, 0, 3, 3]
 
 
+def test_put_in_cache():
+    native_cache = NativeCache(SIZE)
+    native_cache.slots = [1, 2, None, 4, 5]
+    native_cache.values = [1, 2, None, 4, 5]
+
+    native_cache.put('test', 'test')
+
+    assert native_cache.slots == [1, 2, 'test', 4, 5]
+    assert native_cache.values == [1, 2, 'test', 4, 5]
+    assert native_cache.hits == [0, 0, 0, 0, 0]
+
+
 def test_put_in_full_cache_with_empty_hits():
     native_cache = NativeCache(SIZE)
     native_cache.slots = [1, 2, 3, 4, 5]
