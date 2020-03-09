@@ -1,25 +1,20 @@
-from collections import namedtuple
-
-
 class BSTNode:
-
     def __init__(self, key, val, parent):
-        self.NodeKey = key    # pragma: no mutate
-        self.NodeValue = val    # pragma: no mutate
-        self.Parent = parent    # pragma: no mutate
-        self.LeftChild = None    # pragma: no mutate
-        self.RightChild = None    # pragma: no mutate
+        self.NodeKey = key  # pragma: no mutate
+        self.NodeValue = val  # pragma: no mutate
+        self.Parent = parent  # pragma: no mutate
+        self.LeftChild = None  # pragma: no mutate
+        self.RightChild = None  # pragma: no mutate
 
 
-# None если в дереве вообще нету узлов
-# True если узел найден
-# True, если родительскому узлу надо
-# добавить новый узел левым потомком
-BSTFind = namedtuple('BSTFind', 'Node NodeHasKey ToLeft')  # pragma: no mutate
+class BSTFind:
+    def __init__(self, node=None, node_has_key=True, to_left=False):
+        self.Node = node  # pragma: no mutate
+        self.NodeHasKey = node_has_key  # pragma: no mutate
+        self.ToLeft = to_left  # pragma: no mutate
 
 
 class BST:
-
     def __init__(self, node):
         self.Root = node  # pragma: no mutate
         self.min_max_result = None  # pragma: no mutate
@@ -29,7 +24,7 @@ class BST:
         if add:
             return False
 
-        return BSTFind(node, NodeHasKey=True, ToLeft=False)
+        return BSTFind(node, node_has_key=True, to_left=False)
 
     @staticmethod  # pragma: no mutate
     def _get_find_result(add, node, child_node, key, value):
@@ -37,7 +32,7 @@ class BST:
             setattr(node, child_node, BSTNode(key, value, node))
             return True
 
-        return BSTFind(node, NodeHasKey=False, ToLeft=child_node == 'LeftChild')
+        return BSTFind(node, node_has_key=False, to_left=child_node == 'LeftChild')
 
     def _recursive_node_find(self, key, value, node, add=False):
         result = None
@@ -64,7 +59,7 @@ class BST:
         node = self.Root
 
         if not node:
-            return BSTFind(None, NodeHasKey=False, ToLeft=False)
+            return BSTFind(None, node_has_key=False, to_left=False)
 
         return self._recursive_node_find(key, None, node)
 
