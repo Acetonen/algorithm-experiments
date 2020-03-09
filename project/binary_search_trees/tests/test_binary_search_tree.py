@@ -57,7 +57,7 @@ def test_add_in_empty_tree():
 
 
 @pytest.mark.parametrize('value', TREE_KEYS)
-def test_find_by_key_exists(full_binary_tree, value):
+def test_add_by_key_exists(full_binary_tree, value):
     result = full_binary_tree.AddKeyValue(value, value)
 
     assert result is False
