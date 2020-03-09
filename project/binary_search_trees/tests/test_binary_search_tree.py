@@ -14,7 +14,7 @@ def super_simple_binary_tree():
     root_node = BSTNode(8, 8, None)
     binary_tree = BST(root_node)
     right_node = BSTNode(9, 9, root_node)
-    left_node = BSTNode(7, 7, root_node)
+    left_node = BSTNode(0, 0, root_node)
     root_node.RightChild = right_node
     root_node.LeftChild = left_node
 
@@ -40,11 +40,14 @@ def test_count(super_simple_binary_tree):
 @pytest.mark.parametrize('fixture', [
     TestFixture(10, 4, True),
     TestFixture(6, 4, True),
-    TestFixture(7, 3, False),
+    TestFixture(9, 3, False),
+    TestFixture(0, 3, False),
+    TestFixture(8, 3, False),
 ])
 def test_add(super_simple_binary_tree, fixture):
     result = super_simple_binary_tree.AddKeyValue(fixture.value, fixture.value)
 
+    assert super_simple_binary_tree.FindNodeByKey(fixture.value).Node.NodeKey == fixture.value
     assert super_simple_binary_tree.Count() == fixture.count
     assert result == fixture.result
 
@@ -56,7 +59,11 @@ def test_add_in_empty_tree():
     assert binary_tree.Count() == 1
 
 
-@pytest.mark.parametrize('value', TREE_KEYS)
+REVERSE_KEYS = TREE_KEYS.copy()
+REVERSE_KEYS.reverse()
+
+
+@pytest.mark.parametrize('value', REVERSE_KEYS)
 def test_add_by_key_exists(full_binary_tree, value):
     result = full_binary_tree.AddKeyValue(value, value)
 
@@ -64,7 +71,7 @@ def test_add_by_key_exists(full_binary_tree, value):
     assert full_binary_tree.Count() == 15
 
 
-@pytest.mark.parametrize('value', TREE_KEYS)
+@pytest.mark.parametrize('value', REVERSE_KEYS)
 def test_find_by_key_exists(full_binary_tree, value):
     result = full_binary_tree.FindNodeByKey(value)
 
