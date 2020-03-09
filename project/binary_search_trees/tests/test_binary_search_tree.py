@@ -49,6 +49,13 @@ def test_add(super_simple_binary_tree, fixture):
     assert result == fixture.result
 
 
+def test_add_in_empty_tree():
+    binary_tree = BST(None)
+    result = binary_tree.AddKeyValue(8, 8)
+
+    assert binary_tree.Count() == 1
+
+
 @pytest.mark.parametrize('value', TREE_KEYS)
 def test_find_by_key_exists(full_binary_tree, value):
     result = full_binary_tree.FindNodeByKey(value)

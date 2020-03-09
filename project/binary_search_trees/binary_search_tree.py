@@ -17,7 +17,6 @@ class BSTFind:
 class BST:
     def __init__(self, node):
         self.Root = node  # pragma: no mutate
-        self.min_max_result = None  # pragma: no mutate
 
     @staticmethod  # pragma: no mutate
     def _get_not_find_result(add, node):
@@ -65,6 +64,10 @@ class BST:
 
     def AddKeyValue(self, key, value):
         node = self.Root
+
+        if not node:
+            self.Root = BSTNode(key, value, None)
+            return True
 
         return self._recursive_node_find(key, value, node, add=True)
 
