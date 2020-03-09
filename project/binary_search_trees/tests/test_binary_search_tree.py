@@ -57,6 +57,12 @@ def test_add_in_empty_tree():
     result = binary_tree.AddKeyValue(8, 8)
 
     assert binary_tree.Count() == 1
+    assert result is True
+
+    result = binary_tree.AddKeyValue(8, 8)
+
+    assert binary_tree.Count() == 1
+    assert result is False
 
 
 REVERSE_KEYS = TREE_KEYS.copy()
@@ -102,12 +108,13 @@ def test_find_by_key_not_exists(full_binary_tree, fixture):
 
     assert result.Node.NodeKey == fixture.parent_value
     assert result.NodeHasKey is False
-    assert result.ToLeft == fixture.to_left
+    assert result.ToLeft is fixture.to_left
 
 
 def test_delete_node_by_key_exists(full_binary_tree):
-    full_binary_tree.DeleteNodeByKey(6)
+    result = full_binary_tree.DeleteNodeByKey(6)
 
+    assert result is True
     assert full_binary_tree.Count() == 12
 
     result = full_binary_tree.FindNodeByKey(6)

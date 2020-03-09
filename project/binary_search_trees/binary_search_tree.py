@@ -34,8 +34,8 @@ class BST:
         return BSTFind(node, node_has_key=False, to_left=child_node == 'LeftChild')
 
     def _recursive_node_find(self, key, value, node, add=False):
-        result = None
-        child_node = None
+        result = None  # pragma: no mutate
+        child_node = None  # pragma: no mutate
 
         if key > node.NodeKey:
             child_node = 'RightChild'  # pragma: no mutate
@@ -75,11 +75,11 @@ class BST:
         parent_node = result.Node.Parent
 
         if result.Node == self.Root:
-            self.Root = None
+            self.Root = None  # pragma: no mutate
         elif parent_node.NodeKey < key:
-            parent_node.RightChild = None
+            parent_node.RightChild = None  # pragma: no mutate
         else:
-            parent_node.LeftChild = None
+            parent_node.LeftChild = None  # pragma: no mutate
 
     def DeleteNodeByKey(self, key):
         result = self.FindNodeByKey(key)
