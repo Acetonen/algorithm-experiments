@@ -61,6 +61,7 @@ def test_find_by_key_exists(full_binary_tree, value):
     result = full_binary_tree.AddKeyValue(value, value)
 
     assert result is False
+    assert full_binary_tree.Count() == 15
 
 
 @pytest.mark.parametrize('value', TREE_KEYS)
