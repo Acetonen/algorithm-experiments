@@ -68,10 +68,12 @@ class BST:
 
         return self._recursive_node_find(key, value, node, add=True)
 
-    @staticmethod  # pragma: no mutate
-    def _delete_child_from_parent(result, key):
+    def _delete_child_from_parent(self, result, key):
         parent_node = result.Node.Parent
-        if parent_node.NodeKey < key:
+
+        if result.Node == self.Root:
+            self.Root = None
+        elif parent_node.NodeKey < key:
             parent_node.RightChild = None
         else:
             parent_node.LeftChild = None

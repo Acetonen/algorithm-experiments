@@ -99,6 +99,11 @@ def test_delete_node_by_key_not_exists(full_binary_tree):
     assert full_binary_tree.DeleteNodeByKey(666) is False
 
 
+def test_delete_root(full_binary_tree):
+    full_binary_tree.DeleteNodeByKey(8)
+    assert full_binary_tree.Count() == 0
+
+
 def test_find_max(full_binary_tree):
     node = full_binary_tree.FinMinMax(full_binary_tree.Root, True)
     assert node.NodeKey == 15
