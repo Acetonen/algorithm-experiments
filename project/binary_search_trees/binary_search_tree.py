@@ -8,7 +8,7 @@ class BSTNode:
 
 
 class BSTFind:
-    def __init__(self, node=None, node_has_key=True, to_left=False):
+    def __init__(self, node=None, node_has_key=False, to_left=False):
         self.Node = node  # pragma: no mutate
         self.NodeHasKey = node_has_key  # pragma: no mutate
         self.ToLeft = to_left  # pragma: no mutate
