@@ -46,7 +46,6 @@ def test_count(super_simple_binary_tree):
 ])
 def test_add(super_simple_binary_tree, fixture):
     result = super_simple_binary_tree.AddKeyValue(fixture.value, fixture.value)
-
     assert super_simple_binary_tree.FindNodeByKey(fixture.value).Node.NodeKey == fixture.value
     assert super_simple_binary_tree.Count() == fixture.count
     assert result == fixture.result
@@ -55,12 +54,10 @@ def test_add(super_simple_binary_tree, fixture):
 def test_add_in_empty_tree():
     binary_tree = BST(None)
     result = binary_tree.AddKeyValue(8, 8)
-
     assert binary_tree.Count() == 1
     assert result is True
 
     result = binary_tree.AddKeyValue(8, 8)
-
     assert binary_tree.Count() == 1
     assert result is False
 
@@ -72,7 +69,6 @@ REVERSE_KEYS.reverse()
 @pytest.mark.parametrize('value', REVERSE_KEYS)
 def test_add_by_key_exists(full_binary_tree, value):
     result = full_binary_tree.AddKeyValue(value, value)
-
     assert result is False
     assert full_binary_tree.Count() == 15
 
@@ -80,7 +76,6 @@ def test_add_by_key_exists(full_binary_tree, value):
 @pytest.mark.parametrize('value', REVERSE_KEYS)
 def test_find_by_key_exists(full_binary_tree, value):
     result = full_binary_tree.FindNodeByKey(value)
-
     assert result.Node.NodeKey == value
     assert result.NodeHasKey is True
     assert result.ToLeft is False
@@ -89,7 +84,6 @@ def test_find_by_key_exists(full_binary_tree, value):
 def test_find_by_key_empty_tree():
     empty_tree = BST(None)
     result = empty_tree.FindNodeByKey(10)
-
     assert result.Node is None
     assert result.NodeHasKey is False
     assert result.ToLeft is False
@@ -105,21 +99,49 @@ TestFixture = namedtuple('TestFixture', 'value parent_value to_left')
 ])
 def test_find_by_key_not_exists(full_binary_tree, fixture):
     result = full_binary_tree.FindNodeByKey(fixture.value)
-
     assert result.Node.NodeKey == fixture.parent_value
     assert result.NodeHasKey is False
     assert result.ToLeft is fixture.to_left
 
 
-def test_delete_node_by_key_exists(full_binary_tree):
-    result = full_binary_tree.DeleteNodeByKey(6)
-
+def test_delete_node_by_key_list(full_binary_tree):
+    result = full_binary_tree.DeleteNodeByKey(4)
     assert result is True
-    assert full_binary_tree.Count() == 12
+    assert full_binary_tree.Count() == 14
 
+    result = full_binary_tree.FindNodeByKey(4)
+    assert result.Node.NodeKey == 3
+    assert result.NodeHasKey is False
+    assert result.ToLeft is False
+
+    result = full_binary_tree.FindNodeByKey(5)
+    assert result.Node.NodeKey == 5
+    assert result.NodeHasKey is True
+    assert result.ToLeft is False
+
+
+def test_delete_node_by_key_not_list(full_binary_tree):
+    result = full_binary_tree.DeleteNodeByKey(5)
+    assert result is True
+    assert full_binary_tree.Count() == 14
+
+    result = full_binary_tree.FindNodeByKey(5)
+    assert result.Node.NodeKey == 6
+    assert result.NodeHasKey is False
+    assert result.ToLeft is True
+
+    result = full_binary_tree.DeleteNodeByKey(4)
+    assert result is True
+    assert full_binary_tree.Count() == 13
+
+    # Test that we correctly move nodes after delete:
     result = full_binary_tree.FindNodeByKey(6)
+    assert result.NodeHasKey is True
+    result = full_binary_tree.FindNodeByKey(7)
+    assert result.NodeHasKey is True
 
-    assert result.Node.NodeKey == 4
+    result = full_binary_tree.FindNodeByKey(4)
+    assert result.Node.NodeKey == 3
     assert result.NodeHasKey is False
     assert result.ToLeft is False
 
@@ -128,9 +150,24 @@ def test_delete_node_by_key_not_exists(full_binary_tree):
     assert full_binary_tree.DeleteNodeByKey(666) is False
 
 
-def test_delete_root(full_binary_tree):
+def test_delete_root_by_key_list(full_binary_tree):
     full_binary_tree.DeleteNodeByKey(8)
-    assert full_binary_tree.Count() == 0
+    assert full_binary_tree.Count() == 14
+    assert full_binary_tree.Root.NodeKey == 9
+
+
+def test_delete_root_by_key_not_list(full_binary_tree):
+    full_binary_tree.DeleteNodeByKey(9)
+
+    full_binary_tree.DeleteNodeByKey(8)
+    assert full_binary_tree.Count() == 13
+    assert full_binary_tree.Root.NodeKey == 10
+
+    # Test that we correctly move nodes after delete:
+    result = full_binary_tree.FindNodeByKey(11)
+    assert result.NodeHasKey is True
+    result = full_binary_tree.FindNodeByKey(12)
+    assert result.NodeHasKey is True
 
 
 def test_find_max(full_binary_tree):

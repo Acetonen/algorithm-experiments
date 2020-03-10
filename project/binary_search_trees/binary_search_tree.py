@@ -6,6 +6,18 @@ class BSTNode:
         self.LeftChild = None  # pragma: no mutate
         self.RightChild = None  # pragma: no mutate
 
+    @property
+    def is_list(self):
+        return not self.LeftChild and not self.RightChild
+
+    @property
+    def what_child_am_i(self):
+        if self.Parent:
+            if self == self.Parent.LeftChild:
+                return 'LeftChild'
+            elif self == self.Parent.RightChild:
+                return 'RightChild'
+
 
 class BSTFind:
     def __init__(self, node=None, node_has_key=False, to_left=False):
@@ -71,24 +83,6 @@ class BST:
 
         return self._recursive_node_find(key, value, node, add=True)
 
-    def _delete_child_from_parent(self, result, key):
-        parent_node = result.Node.Parent
-
-        if result.Node == self.Root:
-            self.Root = None  # pragma: no mutate
-        elif parent_node.NodeKey < key:
-            parent_node.RightChild = None  # pragma: no mutate
-        else:
-            parent_node.LeftChild = None  # pragma: no mutate
-
-    def DeleteNodeByKey(self, key):
-        result = self.FindNodeByKey(key)
-        if result.NodeHasKey:
-            self._delete_child_from_parent(result, key)
-            return True
-
-        return False
-
     def _recursive_node_list_append(self, result_list, node):
         result_list.append(node)
 
@@ -115,3 +109,55 @@ class BST:
             from_node = getattr(from_node, direction)
 
         return result
+
+    def _swap_nodes(self, aim_node, node_to_replace, direction):
+        if node_to_replace.Parent != aim_node and direction:
+            setattr(node_to_replace.Parent, direction, None)
+
+        node_to_replace.Parent = aim_node.Parent
+        node_to_replace.LeftChild = aim_node.LeftChild
+
+        # Check if offspring has only right child and we must replace it and think about recursion in this root:
+        if node_to_replace == aim_node.RightChild:
+            node_to_replace.RightChild = None
+        else:
+            node_to_replace.RightChild = aim_node.RightChild
+
+        # Check if deleted node is Root:
+        if node_to_replace.Parent is None:
+            self.Root = node_to_replace
+        else:
+            setattr(node_to_replace.Parent, aim_node.what_child_am_i, node_to_replace)
+
+    def _find_offspring(self, result_node):
+        offspring = self.FinMinMax(result_node.RightChild, find_max=False)
+
+        if not offspring.is_list:
+            # If offspring is not list -> working with his RightChild
+            self._swap_nodes(offspring, offspring.RightChild, 'RightChild')
+
+        self._swap_nodes(result_node, offspring, offspring.what_child_am_i)
+
+    def _delete_child_from_parent(self, result_node):
+        # If deleted node Root and it don't have right child -> clear tree
+        if result_node == self.Root and self.Root.RightChild is None:
+            self.Root = None  # pragma: no mutate
+            return
+
+        # If deleted Node don't have right child - clear deleted node from his parent:
+        if result_node.RightChild is None and result_node.what_child_am_i:
+            setattr(result_node.Parent, result_node.what_child_am_i, None)
+        elif result_node.RightChild.is_list:
+            # noinspection PyTypeChecker
+            self._swap_nodes(result_node, result_node.RightChild, result_node.what_child_am_i)
+        else:
+            self._find_offspring(result_node)
+
+    def DeleteNodeByKey(self, key):
+        result = self.FindNodeByKey(key)
+
+        if result.NodeHasKey:
+            self._delete_child_from_parent(result.Node)
+            return True
+
+        return False
