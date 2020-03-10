@@ -21,17 +21,6 @@ def super_simple_binary_tree():
     return binary_tree
 
 
-@pytest.fixture
-def full_binary_tree():
-    binary_tree = BST(BSTNode(8, 8, None))
-    for value in TREE_KEYS:
-        binary_tree.AddKeyValue(value, value)
-
-    assert binary_tree.Count() == 15
-
-    return binary_tree
-
-
 def test_count(super_simple_binary_tree):
     assert super_simple_binary_tree.Count() == 3
 

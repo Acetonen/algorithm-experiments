@@ -26,7 +26,16 @@ class BSTFind:
         self.ToLeft = to_left  # pragma: no mutate
 
 
+ALGORITHM_ORDER = [
+    ('LeftChild', 'Root', 'RightChild'),
+    ('LeftChild', 'RightChild', 'Root'),
+    ('Root', 'LeftChild', 'RightChild'),
+]
+
+
 class BST:
+    bypass_result = tuple()
+
     def __init__(self, node):
         self.Root = node  # pragma: no mutate
 
@@ -82,23 +91,6 @@ class BST:
             return True
 
         return self._recursive_node_find(key, value, node, add=True)
-
-    def _recursive_node_list_append(self, result_list, node):
-        result_list.append(node)
-
-        for child in [node.LeftChild, node.RightChild]:
-            if child:
-                self._recursive_node_list_append(result_list, child)
-
-    def Count(self):
-        result_list = list()
-
-        if not self.Root:
-            return 0
-
-        self._recursive_node_list_append(result_list, self.Root)
-
-        return len(result_list)
 
     def FinMinMax(self, from_node, find_max):
         result = None
@@ -161,3 +153,60 @@ class BST:
             return True
 
         return False
+
+    def _recursive_node_list_append(self, result_list, node, order=('LeftChild', 'Root', 'RightChild')):
+
+        for step in order:
+            if step == 'Root':
+                result_list.append(node)
+            elif getattr(node, step):
+                self._recursive_node_list_append(result_list, getattr(node, step), order)
+
+    def Count(self):
+        result_list = list()
+
+        if not self.Root:
+            return 0
+
+        self._recursive_node_list_append(result_list, self.Root)
+
+        return len(result_list)
+
+    def DeepAllNodes(self, order):
+        result_list = list()
+
+        if not self.Root:
+            return tuple()
+
+        self._recursive_node_list_append(result_list, self.Root, ALGORITHM_ORDER[order])
+
+        return tuple(result_list)
+
+    @staticmethod
+    def _check_child(child, result_list, level):
+        if child:
+            if len(result_list) == level + 1:
+                result_list.append(list())
+            result_list[level + 1].append(child)
+
+    def _recursive_wide_list_append(self, result_list, level):
+        if len(result_list) == level:
+            return
+
+        for node in result_list[level]:
+            for child in [node.LeftChild, node.RightChild]:
+                self._check_child(child, result_list, level)
+
+        self._recursive_wide_list_append(result_list, level + 1)
+
+    def WideAllNodes(self):
+        result_list = list()
+
+        if not self.Root:
+            return tuple()
+
+        result_list.append([self.Root])
+
+        self._recursive_wide_list_append(result_list, level=0)
+
+        return tuple(sum(result_list, list()))
