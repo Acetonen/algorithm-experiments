@@ -1,12 +1,5 @@
 import operator
 
-OPERATOR = {
-    '+': operator.add,
-    '-': operator.sub,
-    '/': operator.truediv,
-    '*': operator.mul,
-}
-
 SUCCESS_MESSAGE = 'Balanced string'
 UNSUCCESS_MESSAGE = 'Not balanced string'
 
@@ -71,6 +64,14 @@ def validate_parentheses(string):
     return SUCCESS_MESSAGE
 
 
+OPERATOR = {
+    '+': operator.add,
+    '-': operator.sub,
+    '/': operator.truediv,
+    '*': operator.mul,
+}
+
+
 def postfix_count(string):
     stack_one = ReverseStack()
     stack_two = ReverseStack()
@@ -81,10 +82,11 @@ def postfix_count(string):
     while stack_one.size():
         element = stack_one.pop()
         if element in OPERATOR:
+            previous_element = stack_two.pop()
             stack_two.push(
                 OPERATOR.get(element)(
                     stack_two.pop(),
-                    stack_two.pop(),
+                    previous_element,
                 ),
             )
         elif element == '=':
