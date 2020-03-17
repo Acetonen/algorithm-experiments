@@ -1,7 +1,7 @@
 class aBST:  # noqa
     def __init__(self, depth):
         # правильно рассчитайте размер массива для дерева глубины depth:
-        self.tree_size = 2 ** depth - 1
+        self.tree_size = 2 ** (depth + 1) - 1
         self.Tree = [None for _ in range(self.tree_size)]
 
     def _recursive_node_find(self, key, index, add=False):
