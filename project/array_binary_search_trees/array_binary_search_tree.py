@@ -42,5 +42,6 @@ class aBST:  # noqa
             return -1
         if index < 0 or empty_tree:
             self.Tree[-index] = key
-        else:
-            return index
+            return -index
+
+        return index

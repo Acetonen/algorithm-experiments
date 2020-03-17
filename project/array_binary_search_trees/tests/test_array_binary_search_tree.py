@@ -6,7 +6,7 @@ from project.array_binary_search_trees.array_binary_search_tree import aBST
 
 TestFixture = namedtuple('TestFixture', 'list index')
 
-TREE_KEYS = [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15]
+TREE_KEYS = [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13]
 
 
 @pytest.mark.parametrize('fixture', [
@@ -41,9 +41,11 @@ def test_add_key():
     for key in TREE_KEYS:
         tree.AddKey(key)
 
-    assert tree.Tree == [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15]
+    assert tree.Tree == [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, None]
 
     tree.AddKey(14)
 
-    assert tree.AddKey(18) == -1
+    assert tree.AddKey(18) == 14
     assert tree.AddKey(14) == 6
+    assert tree.AddKey(8) == 0
+    assert tree.AddKey(666) == -1
