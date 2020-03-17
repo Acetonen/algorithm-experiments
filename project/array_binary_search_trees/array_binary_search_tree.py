@@ -14,11 +14,9 @@ class aBST:  # noqa
         elif key < node_key:
             child_index = 2 * index + 1
 
-        empty_child = child_index and self.Tree[child_index] is None
-
         if node_key == key:
             result = index
-        elif child_index < len(self.Tree) and empty_child:
+        elif child_index and child_index < len(self.Tree) and self.Tree[child_index] is None:  # noqa
             result = -child_index
 
         # Continue recursion:

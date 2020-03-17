@@ -42,3 +42,8 @@ def test_add_key():
         tree.AddKey(key)
 
     assert tree.Tree == [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15]
+
+    tree.AddKey(14)
+
+    assert tree.AddKey(18) == -1
+    assert tree.AddKey(14) == 6
