@@ -15,6 +15,7 @@ def recursively_fill_tree(index, array, result_tree):
 
 
 def GenerateBBSTArray(array):
+    array = sorted(array)
     result_tree = [None for _ in array]
 
     recursively_fill_tree(0, array, result_tree)

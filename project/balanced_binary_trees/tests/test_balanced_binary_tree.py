@@ -8,4 +8,4 @@ RESULT = [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15]
 
 
 def test_generate_binary_array():
-    assert GenerateBBSTArray(list(range(1, 16))) == RESULT
+    assert GenerateBBSTArray(RESULT) == RESULT
