@@ -55,3 +55,18 @@ def test_is_balanced_false():
 
     assert get_all_nodes_keys(tree) == [1, 2, 2, 3, 4]
     assert tree.IsBalanced(tree.Root) is False
+
+
+def test_is_balanced_false_case_two():
+    tree = BalancedBST()
+
+    tree.Root = BSTNode(3, None, 1)
+    second_left = BSTNode(2, tree.Root, 2)
+    tree.Root.LeftChild = second_left
+    third_left = BSTNode(1, second_left, 3)
+    second_left.LeftChild = third_left
+    fourth_right = BSTNode(2, third_left, 4)
+    third_left.RightChild = fourth_right
+
+    assert get_all_nodes_keys(tree) == [1, 2, 2, 3]
+    assert tree.IsBalanced(tree.Root) is False

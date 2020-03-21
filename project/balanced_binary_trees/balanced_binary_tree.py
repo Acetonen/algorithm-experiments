@@ -40,7 +40,7 @@ class BalancedBST:
 
     def _recursive_lists_level_find(self, levels_list, node):
         for child in ('LeftChild', 'Root', 'RightChild'):
-            if child is 'Root' and node.LeftChild is None and node.RightChild is None:
+            if child == 'Root' and (node.LeftChild is None or node.RightChild is None):
                 levels_list.append(node.Level)
             elif getattr(node, child, None):
                 self._recursive_lists_level_find(levels_list, getattr(node, child))
@@ -60,7 +60,6 @@ class BalancedBST:
 
     def IsBalanced(self, root_node):
         lists_levels = self._get_lists_levels(root_node)
-        print(lists_levels)
         if lists_levels:
             return max(lists_levels) - min(lists_levels) < 2
 
