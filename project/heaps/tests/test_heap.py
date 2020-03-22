@@ -46,6 +46,7 @@ def test_add_extra(fixture):
     TestFixture([1, 1, 1, 1, 1, 2, 3], [3, 1, 2, 1, 1, 1, 1]),
     TestFixture([1, 1, 1, 1, 2, 3, 4], [4, 1, 3, 1, 1, 1, 2]),
     TestFixture([1, 1, 1, 2, 3, 4, 5], [5, 2, 4, 1, 1, 1, 3]),
+    TestFixture([1], [1, None, None, None, None, None, None]),
 ])
 def test_make_heap(fixture):
     heap = Heap()
@@ -60,6 +61,8 @@ TestFixture = namedtuple('TestFixture', 'array maximum result')
 @pytest.mark.parametrize('fixture', [
     TestFixture([None for _ in range(7)], -1, [None for _ in range(7)]),
     TestFixture([7, 6, 4, 5, 4, 3, 2], 7, [6, 5, 4, 2, 4, 3, None]),
+    TestFixture([7, 4, 6, 3, 2, 5, 4], 7, [6, 4, 5, 3, 2, 4, None]),
+    TestFixture([7], 7, [None for _ in range(7)]),
 ])
 def test_get_max(fixture):
     heap = Heap()

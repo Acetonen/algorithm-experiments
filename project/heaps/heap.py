@@ -46,23 +46,45 @@ class Heap:
         for index, element in enumerate(self.HeapArray):
             if element is None:
                 self.HeapArray[index - 1] = None
-                return previous_element
+                if index != 1:  # noqa
+                    return previous_element
+                return
 
             previous_element = element
 
         self.HeapArray[-1] = None
+
         return element  # noqa
 
-    def _compare_with_children(self, element_index, element_key):
-        for child_index in [2 * element_index + 1, 2 * element_index + 2]:
-            if child_index >= len(self.HeapArray):
-                return
-            elif self.HeapArray[child_index] > self.HeapArray[element_index]:
-                child_key = self.HeapArray[child_index]
-                self.HeapArray[child_index] = element_key
-                self.HeapArray[element_index] = child_key
+    def _get_max_child(self, element_index):
+        children = list()
 
-                return child_index
+        for number in range(1, 3):
+            index = 2 * element_index + number
+
+            try:
+                children.append((self.HeapArray[index] or -1, index))
+            except IndexError:
+                return
+
+        children = sorted(children, key=lambda child: child[0], reverse=True)
+
+        return children[0]
+
+    def _compare_with_children(self, element_index, element_key):
+        max_child = self._get_max_child(element_index)
+
+        if max_child is None:
+            return
+        elif (
+            self.HeapArray[max_child[1]] is not None
+            and self.HeapArray[max_child[1]] > self.HeapArray[element_index]
+        ):
+            child_key = self.HeapArray[max_child[1]]
+            self.HeapArray[max_child[1]] = element_key
+            self.HeapArray[element_index] = child_key
+
+            return max_child[1]
 
     def _sieving_array_down(self):
         self.HeapArray[0] = self._get_last_element()
