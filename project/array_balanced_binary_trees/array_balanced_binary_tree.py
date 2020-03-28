@@ -3,7 +3,7 @@ def recursively_fill_tree(index, array, result_tree):
         return
 
     sub_index = len(array) // 2
-    result_tree[index] = None
+    result_tree[index] = array[sub_index]
 
     left_side = array[:sub_index]
     right_side = array[sub_index + 1:]
