@@ -1,7 +1,7 @@
 class Heap:
 
     def __init__(self):
-        self.HeapArray = []  # хранит неотрицательные числа-ключи
+        self.HeapArray = []  # pragma: no mutate
 
     def _make_heap(self, depth):
         self.tree_size = 2 ** (depth + 1) - 1
