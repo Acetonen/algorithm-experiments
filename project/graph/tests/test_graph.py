@@ -23,9 +23,10 @@ def create_vertexes_list_from_values(values_list):
 ])
 def test_add_vertex(fixture):
     graph = SimpleGraph(len(fixture.list))
+    assert graph.max_vertex == len(fixture.list)
+
     graph.vertex = create_vertexes_list_from_values(fixture.list)
     graph.AddVertex(666)
-
     assert get_vertexes_values_list(graph) == fixture.result
 
 

@@ -12,6 +12,7 @@ class Node:
         self.next = None  # pragma: no mutate
 
 
+# noinspection DuplicatedCode
 class OrderedList:
     def __init__(self, asc):
         self.head = None  # pragma: no mutate

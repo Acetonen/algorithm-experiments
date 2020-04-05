@@ -14,6 +14,7 @@ TREE_KEYS = [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15]
     TestFixture([1, 2], [2, 1, None, None, None, None, None]),
     TestFixture([6, 5, 4], [6, 5, 4, None, None, None, None]),
     TestFixture([6, 5, 4, 7], [7, 6, 4, 5, None, None, None]),
+    TestFixture([6, 5, 4, 7, 6], [7, 6, 4, 5, 6, None, None]),
     TestFixture([7, 6, 4, 5, 4, 3, 2], [7, 6, 4, 5, 4, 3, 2]),
 ])
 def test_add(fixture):
@@ -62,7 +63,9 @@ TestFixture = namedtuple('TestFixture', 'array maximum result')
     TestFixture([None for _ in range(7)], -1, [None for _ in range(7)]),
     TestFixture([7, 6, 4, 5, 4, 3, 2], 7, [6, 5, 4, 2, 4, 3, None]),
     TestFixture([7, 4, 6, 3, 2, 5, 4], 7, [6, 4, 5, 3, 2, 4, None]),
+    TestFixture([7, 4, 6, 3, 4, 5, 4], 7, [6, 4, 5, 3, 4, 4, None]),
     TestFixture([7], 7, [None for _ in range(7)]),
+    TestFixture([7, 2], 7, [2] + [None for _ in range(6)]),  # noqa
 ])
 def test_get_max(fixture):
     heap = Heap()

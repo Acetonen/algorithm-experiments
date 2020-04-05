@@ -14,7 +14,7 @@ class Heap:
             element_key = self.HeapArray[element_index]
             parent_key = self.HeapArray[parent_index]
 
-            if parent_index < 0 or parent_key > self.HeapArray[element_index]:
+            if parent_index < 0 or parent_key >= self.HeapArray[element_index]:  # pragma: no mutate
                 return element_index
             else:
                 self.HeapArray[parent_index] = element_key
@@ -41,7 +41,7 @@ class Heap:
             self.Add(key)
 
     def _get_last_element(self):
-        previous_element = None
+        previous_element = None  # pragma: no mutate
 
         for index, element in enumerate(self.HeapArray):
             if element is None:
@@ -63,13 +63,15 @@ class Heap:
             index = 2 * element_index + number
 
             try:
-                children.append((self.HeapArray[index] or -1, index))
+                if self.HeapArray[index]:
+                    children.append((self.HeapArray[index], index))
             except IndexError:
                 return
 
-        children = sorted(children, key=lambda child: child[0], reverse=True)
+        if children:
+            children = sorted(children, key=lambda child: child[0], reverse=True)
 
-        return children[0]
+            return children[0]
 
     def _compare_with_children(self, element_index, element_key):
         max_child = self._get_max_child(element_index)
@@ -78,7 +80,7 @@ class Heap:
             return
         elif (
             self.HeapArray[max_child[1]] is not None
-            and self.HeapArray[max_child[1]] > self.HeapArray[element_index]
+            and self.HeapArray[max_child[1]] > self.HeapArray[element_index]  # pragma: no mutate
         ):
             child_key = self.HeapArray[max_child[1]]
             self.HeapArray[max_child[1]] = element_key
