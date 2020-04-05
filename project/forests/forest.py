@@ -79,34 +79,38 @@ class SimpleTree:
         children.Parent = None
         children.Level = 0
 
-    def _working_with_current_node(self, current_node, result_list):
+    def _go_up_to_tree(self, current_node, result_list):
         deeper_children = 0
 
         while current_node:
-            if current_node == self.Root or current_node.Parent == self.Root:
-                return True
+            all_childes = len(current_node.Children) + deeper_children
 
-            brothers = current_node.Parent.Children
-            if (len(brothers) + deeper_children) % 2 == 1:
-                result_list.append(current_node.Parent.Parent)
+            if current_node == self.Root:  # End our search if we find root
+                if all_childes % 2 == 0:  # If last tree is odd -> clear result list
+                    result_list = list()
+                return True
+            elif all_childes % 2 == 1:  # If last tree is even -> remove edge
                 result_list.append(current_node.Parent)
-                self._remove_edge(current_node.Parent.Parent, current_node.Parent)
+                result_list.append(current_node)
+                self._remove_edge(current_node.Parent, current_node)
                 break
-            else:
+            else:  # Go to the next parent
                 current_node = current_node.Parent
-                deeper_children += len(current_node.Parent.Children)
+                deeper_children += len(current_node.Children)
 
     def EvenTrees(self):
         result_list = list()
         break_search = False
 
         while not break_search:
-            all_nodes = self.GetAllNodes()
-            if not all_nodes:
+            all_nodes = self.GetAllNodes()  # Recreate all nodes list
+            if not all_nodes or len(all_nodes) == 1:  # If list is empty or has only root node -> return
+                result_list = list()
                 break
 
+            # Find the most deep leaf:
             sorted_nodes = sorted(all_nodes, key=lambda node: node.Level, reverse=True)
-
-            break_search = self._working_with_current_node(sorted_nodes[0], result_list)
+            # Go up to tree from the most deep leaf:
+            break_search = self._go_up_to_tree(sorted_nodes[0].Parent, result_list)
 
         return result_list

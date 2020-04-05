@@ -35,6 +35,19 @@ def get_odd_tree():
 
 
 @pytest.fixture
+def get_odd_tree_with_results(get_odd_tree):
+    simple_tree, nodes_to_add = get_odd_tree
+    additional_nodes_to_add = [
+        SimpleTreeNode(6, None),
+        SimpleTreeNode(7, None),
+    ]
+    simple_tree.AddChild(nodes_to_add[3], additional_nodes_to_add[0])
+    simple_tree.AddChild(additional_nodes_to_add[0], additional_nodes_to_add[1])
+
+    return simple_tree, nodes_to_add
+
+
+@pytest.fixture
 def get_even_tree():
     simple_tree = SimpleTree(SimpleTreeNode(1, None))
     nodes_to_add = [
@@ -111,8 +124,15 @@ def test_even_trees(get_even_tree):
         assert nodes_to_add[node_index] in even_trees
 
 
-def test_odd_trees(get_odd_tree):
+def test_odd_trees_single_root(get_odd_tree):
     simple_tree, nodes_to_add = get_odd_tree
+    even_trees = simple_tree.EvenTrees()
+
+    assert len(even_trees) == 0
+
+
+def test_odd_trees_with_results(get_odd_tree_with_results):
+    simple_tree, nodes_to_add = get_odd_tree_with_results
     even_trees = simple_tree.EvenTrees()
 
     assert len(even_trees) == 0
