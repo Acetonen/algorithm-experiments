@@ -93,6 +93,38 @@ def get_even_tree():
     return simple_tree, nodes_to_add
 
 
+@pytest.fixture
+def get_even_tree_example():
+    simple_tree = SimpleTree(SimpleTreeNode(1, None))
+    nodes_to_add = [
+        SimpleTreeNode(2, None),
+        SimpleTreeNode(3, None),
+        SimpleTreeNode(4, None),
+        SimpleTreeNode(5, None),
+        SimpleTreeNode(6, None),
+        SimpleTreeNode(7, None),
+        SimpleTreeNode(8, None),
+        SimpleTreeNode(9, None),
+        SimpleTreeNode(10, None)
+    ]
+
+    simple_tree.AddChild(simple_tree.Root, nodes_to_add[0])
+    simple_tree.AddChild(simple_tree.Root, nodes_to_add[1])
+    simple_tree.AddChild(simple_tree.Root, nodes_to_add[4])
+
+    simple_tree.AddChild(nodes_to_add[0], nodes_to_add[3])
+    simple_tree.AddChild(nodes_to_add[0], nodes_to_add[5])
+
+    simple_tree.AddChild(nodes_to_add[1], nodes_to_add[2])
+
+    simple_tree.AddChild(nodes_to_add[4], nodes_to_add[6])
+
+    simple_tree.AddChild(nodes_to_add[6], nodes_to_add[7])
+    simple_tree.AddChild(nodes_to_add[6], nodes_to_add[8])
+
+    return simple_tree, nodes_to_add
+
+
 def test_get_all_nodes(get_even_tree):
     simple_tree, nodes_to_add = get_even_tree
     all_nodes = simple_tree.GetAllNodes()
@@ -136,3 +168,14 @@ def test_odd_trees_with_results(get_odd_tree_with_results):
     even_trees = simple_tree.EvenTrees()
 
     assert len(even_trees) == 0
+
+
+def test_odd_trees_example(get_even_tree_example):
+    simple_tree, nodes_to_add = get_even_tree_example
+    all_nodes = simple_tree.GetAllNodes()
+    assert len(all_nodes) == 10
+
+    even_trees = simple_tree.EvenTrees()
+
+    assert len(even_trees) == 4
+    assert [node.NodeValue for node in even_trees] == [1, 3, 1, 6]

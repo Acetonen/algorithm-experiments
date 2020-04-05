@@ -79,38 +79,29 @@ class SimpleTree:
         children.Parent = None
         children.Level = 0
 
-    def _go_up_to_tree(self, current_node, result_list):
-        deeper_children = 0
+    def _check_even_tree(self, current_node, sub_root_nodes_count):
+        result_list = list()
 
-        while current_node:
-            all_childes = len(current_node.Children) + deeper_children
+        if sub_root_nodes_count % 2 == 0:  # If last tree is even -> remove edge
+            result_list.append(current_node.Parent)
+            result_list.append(current_node)
+            self._remove_edge(current_node.Parent, current_node)
 
-            if current_node == self.Root:  # End our search if we find root
-                if all_childes % 2 == 0:  # If last tree is odd -> clear result list
-                    result_list = list()
-                return True
-            elif all_childes % 2 == 1:  # If last tree is even -> remove edge
-                result_list.append(current_node.Parent)
-                result_list.append(current_node)
-                self._remove_edge(current_node.Parent, current_node)
-                break
-            else:  # Go to the next parent
-                current_node = current_node.Parent
-                deeper_children += len(current_node.Children)
+        return result_list
 
     def EvenTrees(self):
         result_list = list()
-        break_search = False
 
-        while not break_search:
-            all_nodes = self.GetAllNodes()  # Recreate all nodes list
-            if not all_nodes or len(all_nodes) == 1:  # If list is empty or has only root node -> return
-                result_list = list()
-                break
+        all_nodes = self.GetAllNodes()
+        if not all_nodes or len(all_nodes) == 1:  # If list is empty or has only root node -> return
+            return list()
 
-            # Find the most deep leaf:
-            sorted_nodes = sorted(all_nodes, key=lambda node: node.Level, reverse=True)
-            # Go up to tree from the most deep leaf:
-            break_search = self._go_up_to_tree(sorted_nodes[0].Parent, result_list)
+        for node in sorted(all_nodes, key=lambda vertex: vertex.Level, reverse=True):
+            sub_root_nodes_count = len(SimpleTree(node).GetAllNodes())
 
-        return result_list
+            if node is self.Root:  # End our search if we find root
+                if sub_root_nodes_count % 2 == 1:  # If last tree is odd -> clear result list
+                    return list()
+                return result_list
+
+            result_list.extend(self._check_even_tree(node, sub_root_nodes_count))
