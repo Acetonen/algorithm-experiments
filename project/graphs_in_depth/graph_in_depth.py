@@ -1,5 +1,5 @@
-# noinspection DuplicatedCode
-from typing import List
+class FindWay(Exception):
+    pass
 
 
 class Vertex:
@@ -47,12 +47,10 @@ class SimpleGraph:
                 vertex.Hit = False
 
     def _go_deeper(self, current_index, result_stack, to_index):
-        find = False
-        for index_two, edge_two in enumerate(self.m_adjacency[current_index]):
-            if edge_two == 1 and self.vertex[index_two].Hit is False:
-                find = self._try_to_find_from_near_vertexes(index_two, result_stack, to_index)
-
-        return find
+        for index, edge in enumerate(self.m_adjacency[current_index]):
+            if edge == 1 and self.vertex[index].Hit is False:
+                if self._try_to_find_from_near_vertexes(index, result_stack, to_index):
+                    return True
 
     def _search_nearest(self, current_index, to_index, result_stack):
         for index_one, edge_one in enumerate(self.m_adjacency[current_index]):
@@ -60,21 +58,23 @@ class SimpleGraph:
                 result_stack.append(self.vertex[index_one])  # noqa
                 return True
 
-    def _try_to_find_from_near_vertexes(self, current_index: int, result_stack: List[Vertex], to_index):
+    def _try_to_find_from_near_vertexes(self, current_index, result_stack, to_index):
         self.vertex[current_index].Hit = True
         result_stack.append(self.vertex[current_index])  # noqa
 
-        find_nearest = self._search_nearest(current_index, to_index, result_stack)
-        if find_nearest:
-            return True
+        if self._search_nearest(current_index, to_index, result_stack):
+            raise FindWay
 
         if not self._go_deeper(current_index, result_stack, to_index):
             result_stack.pop()
 
-    def DepthFirstSearch(self, from_index: int, to_index: int):
+    def DepthFirstSearch(self, from_index, to_index):
         result_stack = list()
         self.clean_vertex_hits()
 
-        self._try_to_find_from_near_vertexes(from_index, result_stack, to_index)
+        try:
+            self._try_to_find_from_near_vertexes(from_index, result_stack, to_index)
+        except FindWay:
+            pass
 
         return result_stack
